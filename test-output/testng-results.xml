@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="4" passed="4" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2024-09-19T13:32:51 EEST" name="Default suite" finished-at="2024-09-19T13:34:22 EEST" duration-ms="91576">
+    <groups>
+    </groups>
+    <test started-at="2024-09-19T13:32:51 EEST" name="Default test" finished-at="2024-09-19T13:34:22 EEST" duration-ms="91576">
+      <class name="YarnTenantPortal.AutomationTestCases.submitRequest">
+        <test-method is-config="true" signature="testOpenTenantPortal()[pri:0, instance:YarnTenantPortal.AutomationTestCases.submitRequest@5d2a4eed]" started-at="2024-09-19T13:32:51 EEST" name="testOpenTenantPortal" finished-at="2024-09-19T13:33:05 EEST" duration-ms="13936" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testOpenTenantPortal -->
+        <test-method signature="testOpenTenantPortal()[pri:0, instance:YarnTenantPortal.AutomationTestCases.submitRequest@5d2a4eed]" started-at="2024-09-19T13:33:05 EEST" name="testOpenTenantPortal" finished-at="2024-09-19T13:33:06 EEST" duration-ms="883" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testOpenTenantPortal -->
+        <test-method signature="enterCorrectCredentials()[pri:0, instance:YarnTenantPortal.AutomationTestCases.submitRequest@5d2a4eed]" started-at="2024-09-19T13:33:06 EEST" name="enterCorrectCredentials" finished-at="2024-09-19T13:33:17 EEST" depends-on-methods="YarnTenantPortal.AutomationTestCases.submitRequest.testOpenTenantPortal" duration-ms="11006" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- enterCorrectCredentials -->
+        <test-method signature="chooseServicesSearchAndSubmitRequest()[pri:0, instance:YarnTenantPortal.AutomationTestCases.submitRequest@5d2a4eed]" started-at="2024-09-19T13:33:17 EEST" name="chooseServicesSearchAndSubmitRequest" finished-at="2024-09-19T13:34:18 EEST" depends-on-methods="YarnTenantPortal.AutomationTestCases.submitRequest.enterCorrectCredentials" duration-ms="61286" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- chooseServicesSearchAndSubmitRequest -->
+        <test-method signature="checkNewRequestAdded()[pri:0, instance:YarnTenantPortal.AutomationTestCases.submitRequest@5d2a4eed]" started-at="2024-09-19T13:34:18 EEST" name="checkNewRequestAdded" finished-at="2024-09-19T13:34:22 EEST" depends-on-methods="YarnTenantPortal.AutomationTestCases.submitRequest.chooseServicesSearchAndSubmitRequest" duration-ms="4420" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- checkNewRequestAdded -->
+      </class> <!-- YarnTenantPortal.AutomationTestCases.submitRequest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
