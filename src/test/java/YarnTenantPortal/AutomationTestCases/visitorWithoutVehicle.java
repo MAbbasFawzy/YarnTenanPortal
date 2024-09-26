@@ -2,7 +2,7 @@
  * 
  * 
  * 
- * Test Case 8: Add Visitor _ multiple entries _ one visitor _ without vehicle _ existing valid visitor - resubmit
+ * Test Case 6: Add Visitor _ one time _ one visitor _ without vehicle _ new visitor
  * 
  * 
  * 
@@ -13,9 +13,12 @@
 
 package YarnTenantPortal.AutomationTestCases;
 
+import static org.testng.Assert.assertEquals;
+
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -36,7 +39,7 @@ public class visitorWithoutVehicle {
 	@BeforeTest
 	public void testOpenTenantPortal() throws InterruptedException {
 		
-		// driver.manage().window().maximize(); 
+		driver.manage().window().maximize(); 
 
 		driver.navigate().to("https://nakhla_sandbox.yarncloud.dev/tenant/auth/login/");
 		
@@ -71,43 +74,47 @@ public class visitorWithoutVehicle {
 	public void chooseVisitorTabAndAddVisitor() throws InterruptedException {
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		
-		Thread.sleep(8000);
+
+		Thread.sleep(10000);
 		WebElement visitorTab = driver.findElement(By.linkText("My Visitors"));
 		visitorTab.click();
-		
-		Thread.sleep(8000);
-		WebElement addVisitorButton = driver.findElement(By.cssSelector("#__nuxt > main > div > div > div.hidden.sm\\:block > div:nth-child(2) > div > div > button"));
+
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		WebElement addVisitorButton = driver.findElement(By.cssSelector(
+				"#__nuxt > main > div > div > div.hidden.sm\\:block > div:nth-child(2) > div > div > button"));
 		addVisitorButton.click();
-		
-		Thread.sleep(8000);
+
+		Thread.sleep(10000);
 		WebElement visitorTypeList = driver.findElement(By.cssSelector("#pv_id_5 > span"));
 		visitorTypeList.click();
-		
-		Thread.sleep(2000);
+
+		Thread.sleep(8000);
 		WebElement visitorTypeListOption = driver.findElement(By.id("pv_id_5_2"));
 		visitorTypeListOption.click();
-		
+
 		Thread.sleep(2000);
-		WebElement entryType = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[1]/div[3]/span[1]/label"));
+		WebElement entryType = driver
+				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[1]/div[3]/span[1]/label"));
 		entryType.click();
 		
+
 		Thread.sleep(2000);
-		WebElement visitTime = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[2]/div[2]/input"));
-		visitTime.sendKeys("2024-09-18T06:56"); // "10-10-2024	09:35" + Keys.TAB + "PM"
+		WebElement visitEndDate = driver
+				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[2]/div[2]/input"));
+		visitEndDate.sendKeys("12/31/2024" + Keys.TAB + "02" + "30" + "P");
 		
 		
 		Thread.sleep(2000);
 		WebElement visitorFirstName = driver.findElement(By.xpath("//*[@id=\"pv_id_9_0_content\"]/div/div/div[1]/div[1]/input"));
-		visitorFirstName.sendKeys("Mahmoud");
+		visitorFirstName.sendKeys("ali");
 		
 		Thread.sleep(2000);
 		WebElement visitorLastName = driver.findElement(By.xpath("//*[@id=\"pv_id_9_0_content\"]/div/div/div[1]/div[2]/input"));
-		visitorLastName.sendKeys("Abbas");
+		visitorLastName.sendKeys("ali");
 		
 		Thread.sleep(2000);
 		WebElement email = driver.findElement(By.xpath("//*[@id=\"pv_id_9_0_content\"]/div/div/div[1]/div[3]/input"));
-		email.sendKeys("testing@gmail.com");
+		email.sendKeys("ali@gmail.com");
 		
 		Thread.sleep(2000);
 		WebElement nationality = driver.findElement(By.xpath("//*[@id=\"pv_id_6\"]/span"));
@@ -127,7 +134,7 @@ public class visitorWithoutVehicle {
 		
 		Thread.sleep(2000);
 		WebElement documentNumber = driver.findElement(By.xpath("//*[@id=\"pv_id_9_0_content\"]/div/div/div[1]/div[6]/input"));
-		documentNumber.sendKeys("123456789");
+		documentNumber.sendKeys("123456789456");
 		
 		Thread.sleep(2000);
 		WebElement gender = driver.findElement(By.xpath("//*[@id=\"pv_id_8\"]/span"));
@@ -141,7 +148,7 @@ public class visitorWithoutVehicle {
 		WebElement transportation = driver.findElement(By.xpath("//*[@id=\"pv_id_9_0_content\"]/div/div/div[2]/div/div/span[1]"));
 		transportation.click();
 		
-		Thread.sleep(4000);
+		Thread.sleep(6000);
 		WebElement submitButton = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[4]/button[2]"));
 		submitButton.click();
 		
@@ -154,5 +161,12 @@ public class visitorWithoutVehicle {
 		System.out.println("Alert message: " + alertMessageText);
 	}
 	
+	@Test(dependsOnMethods = "chooseVisitorTabAndAddVisitor")
+	public void checkDefaultVisitorStatus() {
+		
+		WebElement visitorStatus = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div[1]/span[2]"));
+		visitorStatus.getText();
+		assertEquals("Pending", visitorStatus.getText());
+	}
 	
 }

@@ -11,6 +11,7 @@
 package YarnTenantPortal.AutomationTestCases;
 
 import java.time.Duration;
+
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -23,21 +24,39 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.attribute.AclEntry;
+import java.util.Properties;
+
 
 public class tenantPortalAuthenticationAndPagesNavigation {
 
 	WebDriver driver = new ChromeDriver();
 	WebDriverWait wait;
+	
+	Properties properties = new Properties();
+	String baseUrl = properties.getProperty("baseUrl");
+    String username = properties.getProperty("username");
+    String password = properties.getProperty("password");
 
 	@Test
 	@BeforeTest
 	public void testOpenTenantPortal() throws InterruptedException {
 		
+		try {
+			FileInputStream input = new FileInputStream("src/test/resources/Config.properties");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		driver.manage().window().maximize(); 
 		
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // 10 seconds timeout
 		
-		driver.navigate().to("https://nakhla_sandbox.yarncloud.dev/tenant/auth/login/");
+		driver.navigate().to("baseUrl");
 		
 	}
 

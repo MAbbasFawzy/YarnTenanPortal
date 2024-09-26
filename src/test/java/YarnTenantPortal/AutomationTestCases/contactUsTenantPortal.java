@@ -33,7 +33,7 @@ public class contactUsTenantPortal {
 	@BeforeTest
 	public void testOpenTenantPortal() {
 
-		//driver.manage().window().maximize();
+		driver.manage().window().maximize();
 
 		driver.navigate().to("https://nakhla_sandbox.yarncloud.dev/tenant/auth/login/");
 

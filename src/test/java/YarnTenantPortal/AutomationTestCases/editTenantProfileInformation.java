@@ -34,7 +34,7 @@ public class editTenantProfileInformation {
 	@BeforeTest
 	public void testOpenTenantPortal() throws InterruptedException {
 		
-		//driver.manage().window().maximize(); 
+		driver.manage().window().maximize();
 
 		driver.navigate().to("https://nakhla_sandbox.yarncloud.dev/tenant/auth/login/");
 		

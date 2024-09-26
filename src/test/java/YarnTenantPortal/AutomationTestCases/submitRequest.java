@@ -32,7 +32,7 @@ public class submitRequest {
 	@BeforeTest
 	public void testOpenTenantPortal() throws InterruptedException {
 
-		// driver.manage().window().maximize();
+		driver.manage().window().maximize();
 
 		wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // 30 seconds timeout
 
@@ -52,7 +52,7 @@ public class submitRequest {
 
 		Thread.sleep(2000);
 		WebElement password = driver.findElement(By.cssSelector("div.form-group:nth-child(2) > input:nth-child(1)"));
-		password.sendKeys("123456");
+		password.sendKeys("123456789");
 
 		Thread.sleep(2000);
 		WebElement loginButton = driver.findElement(By.cssSelector(".py-1"));
@@ -67,7 +67,9 @@ public class submitRequest {
 	@Test(dependsOnMethods = "enterCorrectCredentials")
 	public void chooseServicesSearchAndSubmitRequest() throws InterruptedException {
 
-		Thread.sleep(6000);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		Thread.sleep(8000);
 
 		WebElement servicesButton = driver.findElement(By.linkText("Services"));
 		servicesButton.click();
