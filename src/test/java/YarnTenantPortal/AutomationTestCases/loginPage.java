@@ -4,37 +4,58 @@ import org.testng.annotations.Test;
 import org.testng.AssertJUnit;
 import static org.testng.Assert.assertEquals;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
 public class loginPage {
 
 	WebDriver driver = new ChromeDriver();
-	
+	private String baseUrl;
+    private String username;
+    private String password;
+    
 	//WebDriver driver = new FirefoxDriver();
 
 	@Test
 	@BeforeTest
 	public void testOpenTenantPortal() {
 
+		loadProperties();
+		
 		driver.manage().window().maximize();
 
-		driver.navigate().to("https://nakhla_sandbox.yarncloud.dev/tenant/auth/login/");
+		driver.navigate().to(baseUrl);
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
 	
+	private void loadProperties() {
+		Properties properties = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");
+                return;
+            }
+            properties.load(input);
+            baseUrl = properties.getProperty("base.url");
+            username = properties.getProperty("username");
+            password = properties.getProperty("password");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+	}
+
+
 	@Test 
 	public void enterCorrectCredentials() {
 

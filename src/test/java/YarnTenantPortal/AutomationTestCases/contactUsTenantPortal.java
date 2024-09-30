@@ -43,7 +43,7 @@ public class contactUsTenantPortal {
 		email.sendKeys("test.tenant@yarn.com.sa");
 
 		WebElement password = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[3]/form/div[2]/input"));
-		password.sendKeys("123");
+		password.sendKeys("123456789");
 
 		WebElement loginButton = driver
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[3]/form/div[3]/button"));

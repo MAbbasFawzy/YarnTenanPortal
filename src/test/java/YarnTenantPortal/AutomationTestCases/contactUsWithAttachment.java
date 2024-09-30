@@ -39,7 +39,7 @@ public class contactUsWithAttachment {
 		email.sendKeys("yarn.user.tenant@gmail.com");
 
 		WebElement password = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[3]/form/div[2]/input"));
-		password.sendKeys("123456");
+		password.sendKeys("123456789");
 
 		WebElement loginButton = driver
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[3]/form/div[3]/button"));

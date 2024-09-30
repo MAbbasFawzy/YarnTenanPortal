@@ -50,7 +50,7 @@ public class editTenantProfileInformation {
 		email.sendKeys("yarn.user.tenant@gmail.com");
 
 		WebElement password = driver.findElement(By.cssSelector("#__nuxt > main > div > div > div:nth-child(3) > form > div:nth-child(2) > input"));
-		password.sendKeys("123456");
+		password.sendKeys("123456789");
 
 		WebElement loginButton = driver
 				.findElement(By.cssSelector("#__nuxt > main > div > div > div:nth-child(3) > form > div.mb-8 > button"));

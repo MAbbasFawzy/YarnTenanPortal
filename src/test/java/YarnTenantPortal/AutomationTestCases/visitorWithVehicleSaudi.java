@@ -141,7 +141,4 @@ public class visitorWithVehicleSaudi {
 		String alertMessageText = successMessage.getText();
 		System.out.println("Alert message: " + alertMessageText);
 	}
-	
-	
-	
 }
