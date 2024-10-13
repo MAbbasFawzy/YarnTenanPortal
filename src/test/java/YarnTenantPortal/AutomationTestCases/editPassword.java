@@ -15,7 +15,10 @@ package YarnTenantPortal.AutomationTestCases;
 
 import static org.testng.Assert.assertEquals;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Duration;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -25,52 +28,79 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.AssertJUnit;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class editPassword {
+public class editPassword extends base {
 
 	
 	WebDriver driver = new ChromeDriver();
-	String oldPassword = "123456";
-	String newPassword = "123456789";
+	WebDriverWait wait;
+	
+	private String baseUrl;
+    private String username;
+    private String password;
+    private String newpassword;
+    
+	
+	
+    @BeforeTest
+    public void setup() throws InterruptedException {
+        loadProperties();
+        driver.manage().window().maximize();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        driver.navigate().to(baseUrl);
+        login();
+    }
 
-	// WebDriver driver = new FirefoxDriver();
-
-	@Test
-	@BeforeTest
-	public void testOpenTenantPortal() throws InterruptedException {
-		
-		driver.manage().window().maximize(); 
-
-		driver.navigate().to("https://nakhla_sandbox.yarncloud.dev/tenant/auth/login/");
-		
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    @AfterClass
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+    
+    private void loadProperties() {
+		Properties properties = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");
+                return;
+            }
+            properties.load(input);
+            baseUrl = properties.getProperty("base.url");
+            username = properties.getProperty("username");
+            password = properties.getProperty("password");
+            newpassword = properties.getProperty("newpassword");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 
-	@Test
-	public void enterCorrectCredentials() throws InterruptedException {
+    private void login() throws InterruptedException {
+        // login code
+    	
+    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    	WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
+		email.sendKeys(username);
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		
-		WebElement email = driver.findElement(By.cssSelector("#__nuxt > main > div > div > div:nth-child(3) > form > div:nth-child(1) > input"));
-		email.sendKeys("yarn.user.tenant@gmail.com");
-
-		WebElement password = driver.findElement(By.cssSelector("#__nuxt > main > div > div > div:nth-child(3) > form > div:nth-child(2) > input"));
-		password.sendKeys(oldPassword);
+		WebElement passcode = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[2]/input"));
+		passcode.sendKeys(password);
 
 		WebElement loginButton = driver
-				.findElement(By.cssSelector("#__nuxt > main > div > div > div:nth-child(3) > form > div.mb-8 > button"));
+				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[3]/form/div[3]/button"));
 		loginButton.click();
 
-		WebElement userName = driver.findElement(By.cssSelector("#__nuxt > main > nav.fixed.z-10.top-0.right-0.w-full.border.border-b.shadow-xl.bg-\\[var\\(--c1\\)\\].hidden.sm\\:block.print\\:\\!hidden > div > div.flex.justify-between.items-center.h-22.border-b > div.flex.items-center.gap-4 > span.text-sm"));
+		WebElement userName = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/nav[1]/div/div[1]/div[2]/span[2]"));
 		AssertJUnit.assertEquals("Mahmoud Abbas", userName.getText());
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		Thread.sleep(2000);
+    }
 
-	}
 	
-	@Test(dependsOnMethods = "enterCorrectCredentials")
+	
+	@Test
 	public void editProfilePassword() throws InterruptedException {
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -87,15 +117,15 @@ public class editPassword {
 		
 		Thread.sleep(2000);
 		WebElement currentPasswordInput = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[1]/input"));
-		currentPasswordInput.sendKeys(oldPassword);
+		currentPasswordInput.sendKeys(password);
 		
 		Thread.sleep(2000);
 		WebElement newPasswordInput = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[2]/input"));
-		newPasswordInput.sendKeys(newPassword);
+		newPasswordInput.sendKeys(newpassword);
 		
 		Thread.sleep(2000);
 		WebElement confirmNewPassword = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[3]/input"));
-		confirmNewPassword.sendKeys(newPassword);
+		confirmNewPassword.sendKeys(newpassword);
 		
 		Thread.sleep(2000);
 		WebElement submitPasswordEdit = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[4]/button[1]"));
@@ -116,7 +146,7 @@ public class editPassword {
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
-		
+		Thread.sleep(8000);
 		WebElement logoutButton = driver.findElement(By.cssSelector("#__nuxt > main > nav.fixed.z-10.top-0.right-0.w-full.border.border-b.shadow-xl.bg-\\[var\\(--c1\\)\\].hidden.sm\\:block.print\\:\\!hidden > div > div.flex.justify-between.items-center.h-22.border-b > div.flex.items-center.gap-4 > a:nth-child(7) > svg"));
 		logoutButton.click();
 		
@@ -126,10 +156,10 @@ public class editPassword {
 		
 		Thread.sleep(2000);
 		WebElement email = driver.findElement(By.cssSelector("#__nuxt > main > div > div > div:nth-child(3) > form > div:nth-child(1) > input"));
-		email.sendKeys("yarn.user.tenant@gmail.com");
+		email.sendKeys(username);
 
 		WebElement password = driver.findElement(By.cssSelector("#__nuxt > main > div > div > div:nth-child(3) > form > div:nth-child(2) > input"));
-		password.sendKeys(newPassword);
+		password.sendKeys(newpassword);
 		
 		WebElement loginButton = driver
 				.findElement(By.cssSelector("#__nuxt > main > div > div > div:nth-child(3) > form > div.mb-8 > button"));

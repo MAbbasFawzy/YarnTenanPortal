@@ -1,14 +1,3 @@
-/*
- * 
- * 
- * Test Case 12: Edit tenant profile information
- * Description: make sure that the tenant can edit his information 
- * 
- * 
- */
-
-
-
 package YarnTenantPortal.AutomationTestCases;
 
 import java.io.IOException;
@@ -21,15 +10,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.AssertJUnit;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class editTenantProfileInformation extends base {
+public class base {
 
 	WebDriver driver = new FirefoxDriver();
     WebDriverWait wait;
@@ -37,8 +24,9 @@ public class editTenantProfileInformation extends base {
     private String baseUrl;
     private String username;
     private String password;
+    private String newpassword;
 	
-    
+    @Test
     @BeforeTest
     public void setup() throws InterruptedException {
         loadProperties();
@@ -66,6 +54,7 @@ public class editTenantProfileInformation extends base {
             baseUrl = properties.getProperty("base.url");
             username = properties.getProperty("username");
             password = properties.getProperty("password");
+            newpassword = properties.getProperty(newpassword);
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,38 +81,4 @@ public class editTenantProfileInformation extends base {
 
 		Thread.sleep(2000);
     }
-	
-	
-	@Test
-	public void editProfile() throws InterruptedException {
-		
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		
-		WebElement profileIcon = driver.findElement(By.xpath("/html/body/div[1]/main/nav[1]/div/div[1]/div[2]/a[4]/img"));
-		profileIcon.click();
-		
-		Thread.sleep(2000);
-		driver.getCurrentUrl();
-		
-		Thread.sleep(2000);
-		WebElement editButton = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/div[1]/button[1]"));
-		editButton.click();
-		
-		Thread.sleep(2000);
-		WebElement jobTitle = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/form/div[4]/input"));
-		jobTitle.sendKeys("Quality control engineer / Quality Assurance Engineer");
-		
-		Thread.sleep(4000);
-		WebElement submitButtonForEditProfile = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/form/div[5]/button[1]"));
-		submitButtonForEditProfile.click();
-		
-		Thread.sleep(4000);
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-		WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".p-toast[data-pc-name='toast'] .p-toast-message")));
-		
-		String alertMessageText = successMessage.getText();
-		AssertJUnit.assertEquals("Success", alertMessageText);
-        System.out.println("Alert message: " + alertMessageText);
-        
-	}
 }

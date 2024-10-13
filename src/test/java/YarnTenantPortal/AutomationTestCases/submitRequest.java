@@ -6,69 +6,92 @@ Description : User can click on “Submit a Request” and then create a request
  * 
  */
 
-
-
 package YarnTenantPortal.AutomationTestCases;
 
 import static org.testng.Assert.assertEquals;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Duration;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.AssertJUnit;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class submitRequest {
 
-	WebDriver driver = new ChromeDriver();
+	WebDriver driver = new FirefoxDriver();
 	WebDriverWait wait;
+	private String baseUrl;
+	private String username;
+	private String password;
 
-	@Test
 	@BeforeTest
-	public void testOpenTenantPortal() throws InterruptedException {
-
+	public void setup() throws InterruptedException {
+		loadProperties();
 		driver.manage().window().maximize();
-
-		wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // 30 seconds timeout
-
-		driver.navigate().to("https://nakhla_sandbox.yarncloud.dev/tenant/auth/login/");
-
-		// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		driver.navigate().to(baseUrl);
+		login();
 	}
 
-	@Test(dependsOnMethods = "testOpenTenantPortal")
-	public void enterCorrectCredentials() throws InterruptedException {
+	@AfterClass
+	public void tearDown() {
+		if (driver != null) {
+			driver.quit();
+		}
+	}
+
+	private void loadProperties() {
+		Properties properties = new Properties();
+		try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+			if (input == null) {
+				System.out.println("Sorry, unable to find config.properties");
+				return;
+			}
+			properties.load(input);
+			baseUrl = properties.getProperty("base.url");
+			username = properties.getProperty("username");
+			password = properties.getProperty("password");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void login() throws InterruptedException {
+		// login code
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
+		email.sendKeys(username);
 
-		Thread.sleep(2000);
-		WebElement email = driver.findElement(By.cssSelector("div.form-group:nth-child(1) > input:nth-child(1)"));
-		email.sendKeys("yarn.user.tenant@gmail.com");
+		WebElement passcode = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[2]/input"));
+		passcode.sendKeys(password);
 
-		Thread.sleep(2000);
-		WebElement password = driver.findElement(By.cssSelector("div.form-group:nth-child(2) > input:nth-child(1)"));
-		password.sendKeys("123456789");
-
-		Thread.sleep(2000);
-		WebElement loginButton = driver.findElement(By.cssSelector(".py-1"));
+		WebElement loginButton = driver
+				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[3]/form/div[3]/button"));
 		loginButton.click();
 
-		Thread.sleep(4000);
-
-		WebElement userName = driver.findElement(By.xpath("/html/body/div[1]/main/nav[1]/div/div[1]/div[2]/span[2]"));
+		WebElement userName = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/nav[1]/div/div[1]/div[2]/span[2]"));
 		AssertJUnit.assertEquals("Mahmoud Abbas", userName.getText());
+
+		Thread.sleep(2000);
 	}
 
-	@Test(dependsOnMethods = "enterCorrectCredentials")
+	@Test
 	public void chooseServicesSearchAndSubmitRequest() throws InterruptedException {
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		
+
 		Thread.sleep(8000);
 
 		WebElement servicesButton = driver.findElement(By.linkText("Services"));
@@ -90,36 +113,38 @@ public class submitRequest {
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/div[1]/h4/span[2]"));
 		assertEquals("Internet Services", serviceTitle.getText());
 
+		Thread.sleep(4000);
 		WebElement requestServiceButton = driver
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/div[1]/div/button[1]"));
 		requestServiceButton.click();
 
-		Thread.sleep(4000);
+		Thread.sleep(6000);
 		WebElement servicesDropDown = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[1]/div/div"));
 		servicesDropDown.click();
 
-		Thread.sleep(4000);
+		Thread.sleep(6000);
 		WebElement serviceOption = driver.findElement(By.xpath("//*[@id=\"pv_id_8_0\"]"));
 		serviceOption.click();
 
-		Thread.sleep(4000);
+		Thread.sleep(8000);
 		WebElement serviceCategory = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[2]/div/div"));
 		serviceCategory.click();
 
-		Thread.sleep(4000);
+		Thread.sleep(8000);
 		WebElement serviceCategoryOption = driver.findElement(By.xpath("//*[@id=\"pv_id_10_1\"]"));
 		serviceCategoryOption.click();
-		
+
 		Thread.sleep(4000);
 		WebElement description = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[3]/textarea"));
 		description.sendKeys("Testing description new request is added.");
-		
+
 		Thread.sleep(4000);
 		WebElement preferredVisitDate = driver.findElement(By.xpath("//*[@id=\"pv_id_9\"]/input"));
 		preferredVisitDate.sendKeys("16-9-2024");
-		
+
 		Thread.sleep(4000);
-		WebElement preferredVisitTime = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[4]/div[1]/div[2]/input"));
+		WebElement preferredVisitTime = driver
+				.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[4]/div[1]/div[2]/input"));
 		preferredVisitTime.sendKeys("18:30");
 
 		Thread.sleep(4000);
@@ -141,18 +166,20 @@ public class submitRequest {
 	public void checkNewRequestAdded() throws InterruptedException {
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		
+
+		Thread.sleep(4000);
 		WebElement myRequestsTab = driver.findElement(By.linkText("My Requests"));
 		myRequestsTab.click();
-		
-		Thread.sleep(2000);
+
+		Thread.sleep(4000);
 		WebElement newRequest = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/a[1]"));
 		newRequest.click();
-		
-		Thread.sleep(2000);
-		WebElement requestDescription = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[2]/div[7]/div[2]"));
+
+		Thread.sleep(4000);
+		WebElement requestDescription = driver
+				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div[6]/div[2]/div"));
 		requestDescription.getText();
-		
+
 		assertEquals(requestDescription.getText(), "Testing description new request is added.");
 	}
 
