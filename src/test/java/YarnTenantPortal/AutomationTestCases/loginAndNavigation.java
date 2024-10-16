@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.AssertJUnit;
@@ -25,12 +26,13 @@ import org.testng.annotations.Test;
 
 public class loginAndNavigation {
 
-	WebDriver driver = new FirefoxDriver();
+	WebDriver driver = new ChromeDriver();
 	WebDriverWait wait;
 
 	private String baseUrl;
 	private String username;
 	private String password;
+	private String tenant;
 
 	@BeforeTest
 	public void setup() throws InterruptedException {
@@ -59,6 +61,7 @@ public class loginAndNavigation {
 			baseUrl = properties.getProperty("base.url");
 			username = properties.getProperty("username");
 			password = properties.getProperty("password");
+			tenant = properties.getProperty("tenant");
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -79,8 +82,8 @@ public class loginAndNavigation {
 		loginButton.click();
 
 		WebElement userName = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/nav[1]/div/div[1]/div[2]/span[2]"));
-		AssertJUnit.assertEquals("Mahmoud Abbas", userName.getText()); //
-		AssertJUnit.assertEquals("Andalus Tenant", userName.getText());
+		AssertJUnit.assertEquals(tenant, userName.getText()); 
+		
 
 		Thread.sleep(2000);
 	}

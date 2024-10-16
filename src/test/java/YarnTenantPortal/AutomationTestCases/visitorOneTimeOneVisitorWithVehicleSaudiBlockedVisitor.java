@@ -1,3 +1,14 @@
+/*
+ * 
+ * 
+ * Test Case 10: Add Visitor _ one time _ one visitor _ with vehicle Saudi _ Blocked visitor
+ * 
+ * 
+ * 
+ */
+
+
+
 package YarnTenantPortal.AutomationTestCases;
 
 import static org.testng.Assert.assertEquals;
@@ -9,14 +20,9 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.AssertJUnit;
@@ -24,8 +30,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorResubmit {
-
+public class visitorOneTimeOneVisitorWithVehicleSaudiBlockedVisitor {
+	
 	WebDriver driver = new FirefoxDriver();
 	WebDriverWait wait;
 	private String baseUrl;
@@ -85,10 +91,10 @@ public class visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorR
 
 		Thread.sleep(2000);
 	}
-
-	@Test(priority = 0)
+	
+	@Test (priority = 0)
 	public void chooseVisitorTabAndAddVisitor() throws InterruptedException {
-
+		
 		randomGenerator.Visitor visitor = randomGenerator.generateRandomContact();
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -111,55 +117,99 @@ public class visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorR
 		visitorTypeListOption.click();
 
 		Thread.sleep(2000);
-		WebElement entryType = driver.findElement(By.id("multiple"));
+		WebElement entryType = driver.findElement(By.id("single"));
 		entryType.click();
 
 		Thread.sleep(2000);
 		WebElement visitEndDate = driver
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[2]/div[2]/input"));
-		visitEndDate.sendKeys("12/31/2024" + "02" + "30" + "P");
+		visitEndDate.sendKeys("10/18/2024" + "02" + "30" + "P");
 
 		Thread.sleep(2000);
 		WebElement visitorFirstName = driver
 				.findElement(By.xpath("//*[@id=\"pv_id_9_0_content\"]/div/div/div[1]/div[1]/input"));
-		visitorFirstName.sendKeys("abbas");
+		visitorFirstName.sendKeys(visitor.firstName);
 
 		Thread.sleep(2000);
 		WebElement visitorLastName = driver
 				.findElement(By.xpath("//*[@id=\"pv_id_9_0_content\"]/div/div/div[1]/div[2]/input"));
-		visitorLastName.sendKeys("adham");
+		visitorLastName.sendKeys(visitor.lastName);
 
 		Thread.sleep(2000);
 		WebElement email = driver.findElement(By.xpath("//*[@id=\"pv_id_9_0_content\"]/div/div/div[1]/div[3]/input"));
-		email.sendKeys("a.adham@gmail.com");
+		email.sendKeys(visitor.email);
 
-		Thread.sleep(6000);
+		Thread.sleep(2000);
 		WebElement nationality = driver.findElement(By.xpath("//*[@id=\"pv_id_6\"]/span"));
 		nationality.click();
+		
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			WebElement alertDialog = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".p-dialog")));
 
-		// Wait for the alert dialog to appear
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-		WebElement alertDialog = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".p-dialog")));
+			WebElement cancelButton = alertDialog.findElement(By.cssSelector("button[type='button']"));
+			cancelButton.click();
+		} catch (Exception e) {
+			Thread.sleep(4000);
+			WebElement nationalityOption = driver.findElement(By.xpath("//*[@id=\"pv_id_6_0\"]"));
+			nationalityOption.click();
+		}
 
-		// Click on the resubmit button
-		WebElement resubmitButton = alertDialog
-				.findElement(By.xpath("/html/body/div[4]/div/div[2]/div/div[4]/button[1]"));
-		resubmitButton.click();
+		
 
 		Thread.sleep(4000);
-		WebElement resubmittedVisitEndDate = driver
-				.findElement(By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[5]/input"));
-		resubmittedVisitEndDate.sendKeys("12/31/2024" + "02" + "30" + "P");
+		WebElement documentType = driver.findElement(By.xpath("//*[@id=\"pv_id_7\"]/span"));
+		documentType.click();
+
+		Thread.sleep(2000);
+		WebElement documentTypeListOption = driver.findElement(By.xpath("//*[@id=\"pv_id_7_0\"]"));
+		documentTypeListOption.click();
+
+		Thread.sleep(2000);
+		WebElement documentNumber = driver
+				.findElement(By.xpath("//*[@id=\"pv_id_9_0_content\"]/div/div/div[1]/div[6]/input"));
+		documentNumber.sendKeys(visitor.numbers);
+
+		Thread.sleep(2000);
+		WebElement gender = driver.findElement(By.xpath("//*[@id=\"pv_id_8\"]/span"));
+		gender.click();
+
+		Thread.sleep(2000);
+		WebElement genderOption = driver.findElement(By.xpath("//*[@id=\"pv_id_8_0\"]"));
+		genderOption.click();
 
 		Thread.sleep(4000);
-		WebElement resubmitVisitorRequestButton = driver
-				.findElement(By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[9]/button"));
-		resubmitVisitorRequestButton.click();
+		WebElement transportation = driver.findElement(By.id("visitor-0-with-vehicle"));
+		transportation.click();
 
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement carPlateType = wait.until(ExpectedConditions.elementToBeClickable(By.id("pv_id_21")));
+		carPlateType.click();
+
+		Thread.sleep(4000);
+		WebElement carPlateOption = driver.findElement(By.id("pv_id_21_0"));
+		carPlateOption.click();
+
+		Thread.sleep(2000);
+		WebElement carPlateNumber = driver.findElement(By.cssSelector(
+				"#pv_id_9_0_content > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(2) > input"));
+		carPlateNumber.sendKeys("123-zxcv");
+
+		Thread.sleep(6000);
+		WebElement submitButton = driver
+				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[4]/button[2]"));
+		submitButton.click();
+
+		WebDriverWait waitSuccessMessage = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebElement successMessage = waitSuccessMessage
+				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".p-toast > div:nth-child(1)")));
+
+		String alertMessageText = successMessage.getText();
+		System.out.println("Alert message: " + alertMessageText);
 	}
 
 	@Test(priority = 1)
-	public void checkAlertForAddingResubmittedVisitors() {
+	public void checkAlertForMaxNumberOfVisitors() {
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		WebElement successMessage = wait
@@ -169,6 +219,17 @@ public class visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorR
 
 		assertEquals(alertMessageText, alertMessageText);
 
+	}
+
+	@Test(priority = 2)
+	public void checkDefaultVisitorStatus() {
+
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+		WebElement visitorStatus = driver
+				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div[1]/span[2]"));
+		visitorStatus.getText();
+		assertEquals("Pending", visitorStatus.getText());
 	}
 
 }

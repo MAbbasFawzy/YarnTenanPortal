@@ -39,6 +39,7 @@ public class visitorOneTimeOneVisitorWithoutVehicleNewVisitor extends randomGene
 	private String baseUrl;
 	private String username;
 	private String password;
+	private String tenant;
 
 	@BeforeTest
 	public void setup() throws InterruptedException {
@@ -67,6 +68,7 @@ public class visitorOneTimeOneVisitorWithoutVehicleNewVisitor extends randomGene
 			baseUrl = properties.getProperty("base.url");
 			username = properties.getProperty("username");
 			password = properties.getProperty("password");
+			tenant = properties.getProperty("tenant");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -87,7 +89,7 @@ public class visitorOneTimeOneVisitorWithoutVehicleNewVisitor extends randomGene
 		loginButton.click();
 
 		WebElement userName = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/nav[1]/div/div[1]/div[2]/span[2]"));
-		AssertJUnit.assertEquals("Mahmoud Abbas", userName.getText());
+		AssertJUnit.assertEquals(tenant, userName.getText());
 
 		Thread.sleep(2000);
 	}

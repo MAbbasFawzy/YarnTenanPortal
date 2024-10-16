@@ -3,13 +3,15 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="YarnTenantPortal.AutomationTestCases.visitorGroup">
+      <class name="YarnTenantPortal.AutomationTestCases.visitorOneTimeOneVisitorWithoutVehicleNewVisitor">
         <methods>
           <include name="checkDefaultVisitorStatus"/>
-          <include name="chooseVisitorTabAndAddVisitor"/>
+          <include name="checkAlertForMaxNumberOfVisitors"/>
+          <include name="tearDown"/>
           <include name="setup"/>
+          <include name="chooseVisitorTabAndAddVisitor"/>
         </methods>
-      </class> <!-- YarnTenantPortal.AutomationTestCases.visitorGroup -->
+      </class> <!-- YarnTenantPortal.AutomationTestCases.visitorOneTimeOneVisitorWithoutVehicleNewVisitor -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

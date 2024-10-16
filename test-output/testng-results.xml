@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
+<testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-10-13T13:14:32 EEST" name="Default suite" finished-at="2024-10-13T13:17:30 EEST" duration-ms="178152">
+  <suite started-at="2024-10-16T09:02:30 EEST" name="Default suite" finished-at="2024-10-16T09:04:14 EEST" duration-ms="104048">
     <groups>
     </groups>
-    <test started-at="2024-10-13T13:14:32 EEST" name="Default test" finished-at="2024-10-13T13:17:30 EEST" duration-ms="178152">
-      <class name="YarnTenantPortal.AutomationTestCases.visitorGroup">
-        <test-method is-config="true" signature="setup()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorGroup@1bb564e2]" started-at="2024-10-13T13:14:32 EEST" name="setup" finished-at="2024-10-13T13:14:47 EEST" duration-ms="14585" status="PASS">
+    <test started-at="2024-10-16T09:02:30 EEST" name="Default test" finished-at="2024-10-16T09:04:14 EEST" duration-ms="104048">
+      <class name="YarnTenantPortal.AutomationTestCases.visitorOneTimeOneVisitorWithoutVehicleNewVisitor">
+        <test-method is-config="true" signature="setup()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorOneTimeOneVisitorWithoutVehicleNewVisitor@5ee2b6f9]" started-at="2024-10-16T09:02:30 EEST" name="setup" finished-at="2024-10-16T09:02:52 EEST" duration-ms="21910" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="chooseVisitorTabAndAddVisitor()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorGroup@1bb564e2]" started-at="2024-10-13T13:14:47 EEST" name="chooseVisitorTabAndAddVisitor" finished-at="2024-10-13T13:17:30 EEST" duration-ms="163519" status="PASS">
+        <test-method signature="chooseVisitorTabAndAddVisitor()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorOneTimeOneVisitorWithoutVehicleNewVisitor@5ee2b6f9]" started-at="2024-10-16T09:02:52 EEST" name="chooseVisitorTabAndAddVisitor" finished-at="2024-10-16T09:04:10 EEST" duration-ms="78250" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- chooseVisitorTabAndAddVisitor -->
-        <test-method signature="checkDefaultVisitorStatus()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorGroup@1bb564e2]" started-at="2024-10-13T13:17:30 EEST" name="checkDefaultVisitorStatus" finished-at="2024-10-13T13:17:30 EEST" depends-on-methods="YarnTenantPortal.AutomationTestCases.visitorGroup.chooseVisitorTabAndAddVisitor" duration-ms="5" status="PASS">
+        <test-method signature="checkAlertForMaxNumberOfVisitors()[pri:1, instance:YarnTenantPortal.AutomationTestCases.visitorOneTimeOneVisitorWithoutVehicleNewVisitor@5ee2b6f9]" started-at="2024-10-16T09:04:10 EEST" name="checkAlertForMaxNumberOfVisitors" finished-at="2024-10-16T09:04:10 EEST" duration-ms="29" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- checkAlertForMaxNumberOfVisitors -->
+        <test-method signature="checkDefaultVisitorStatus()[pri:2, instance:YarnTenantPortal.AutomationTestCases.visitorOneTimeOneVisitorWithoutVehicleNewVisitor@5ee2b6f9]" started-at="2024-10-16T09:04:10 EEST" name="checkDefaultVisitorStatus" finished-at="2024-10-16T09:04:11 EEST" duration-ms="797" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- checkDefaultVisitorStatus -->
-      </class> <!-- YarnTenantPortal.AutomationTestCases.visitorGroup -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorOneTimeOneVisitorWithoutVehicleNewVisitor@5ee2b6f9]" started-at="2024-10-16T09:04:11 EEST" name="tearDown" finished-at="2024-10-16T09:04:14 EEST" duration-ms="3019" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- YarnTenantPortal.AutomationTestCases.visitorOneTimeOneVisitorWithoutVehicleNewVisitor -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

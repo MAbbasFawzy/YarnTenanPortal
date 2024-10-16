@@ -42,6 +42,7 @@ public class editPassword extends base {
     private String username;
     private String password;
     private String newpassword;
+    private String tenant;
     
 	
 	
@@ -73,6 +74,7 @@ public class editPassword extends base {
             username = properties.getProperty("username");
             password = properties.getProperty("password");
             newpassword = properties.getProperty("newpassword");
+            tenant = properties.getProperty("tenant");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,7 +95,7 @@ public class editPassword extends base {
 		loginButton.click();
 
 		WebElement userName = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/nav[1]/div/div[1]/div[2]/span[2]"));
-		AssertJUnit.assertEquals("Mahmoud Abbas", userName.getText());
+		AssertJUnit.assertEquals(tenant, userName.getText());
 
 		Thread.sleep(2000);
     }
