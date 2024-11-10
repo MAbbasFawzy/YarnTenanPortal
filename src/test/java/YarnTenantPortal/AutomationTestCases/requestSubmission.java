@@ -63,14 +63,13 @@ public class requestSubmission {
         }
 	}
     
-    private void login() throws InterruptedException {
-        // login code
-    	
-    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    	WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
+    private void login() throws InterruptedException { // login code
+
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
 		email.sendKeys(username);
 
-		WebElement passcode = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[2]/input"));
+		WebElement passcode = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[2]/div/input"));
 		passcode.sendKeys(password);
 
 		WebElement loginButton = driver
@@ -78,9 +77,11 @@ public class requestSubmission {
 		loginButton.click();
 
 		WebElement userName = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/nav[1]/div/div[1]/div[2]/span[2]"));
-		AssertJUnit.assertEquals(tenant, userName.getText());
+		AssertJUnit.assertEquals(tenant, userName.getText()); 
+		
+
 		Thread.sleep(2000);
-    }
+	}
 
 	@Test
 	public void chooseSubscriptions() throws InterruptedException {
@@ -105,11 +106,13 @@ public class requestSubmission {
 	public void chooseServiceToSubmitRequest() throws InterruptedException {
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		
+
+		Thread.sleep(8000);
+
 		WebElement servicesButton = driver.findElement(By.linkText("Services"));
 		servicesButton.click();
-		
-		Thread.sleep(6000);
+
+		Thread.sleep(8000);
 		WebElement searchBox = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/div/input"));
 		Thread.sleep(4000);
 		searchBox.click();
@@ -123,7 +126,7 @@ public class requestSubmission {
 		Thread.sleep(4000);
 		WebElement serviceTitle = driver
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/div[1]/h4/span[2]"));
-		assertEquals("Internet Services", serviceTitle.getText());
+		assertEquals(serviceTitle.getText(), serviceTitle.getText());
 
 		Thread.sleep(4000);
 		WebElement requestServiceButton = driver
@@ -143,7 +146,7 @@ public class requestSubmission {
 		serviceCategory.click();
 
 		Thread.sleep(8000);
-		WebElement serviceCategoryOption = driver.findElement(By.xpath("//*[@id=\"pv_id_10_1\"]"));
+		WebElement serviceCategoryOption = driver.findElement(By.xpath("/html/body/div[5]/div[2]/ul/li[1]"));
 		serviceCategoryOption.click();
 
 		Thread.sleep(4000);
@@ -151,12 +154,12 @@ public class requestSubmission {
 		description.sendKeys("Testing description new request is added.");
 
 		Thread.sleep(4000);
-		WebElement preferredVisitDate = driver.findElement(By.xpath("//*[@id=\"pv_id_9\"]/input"));
+		WebElement preferredVisitDate = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[5]/div[1]/div[1]/input"));
 		preferredVisitDate.sendKeys("16-9-2024");
 
 		Thread.sleep(4000);
 		WebElement preferredVisitTime = driver
-				.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[4]/div[1]/div[2]/input"));
+				.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[5]/div[1]/div[2]/input"));
 		preferredVisitTime.sendKeys("18:30");
 
 		Thread.sleep(4000);

@@ -7,7 +7,7 @@ public class randomGenerator {
 	private static final String[] FIRST_NAMES = {"John", "Jane", "Bob", "Alice", "Mike", "Sarah", "Emily", "David"};
     private static final String[] LAST_NAMES = {"Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson"};
     private static final String[] EMAIL_DOMAINS = {"gmail.com", "yahoo.com", "hotmail.com", "outlook.com"};
-    private static final String[] NUMBERS = {"202", "212", "415", "650", "818"};
+    private static final String[] NUMBERS = {"210", "215", "315", "450", "500", "100", "150", "200", "180"};
 
     public static class Visitor {
         public String firstName;

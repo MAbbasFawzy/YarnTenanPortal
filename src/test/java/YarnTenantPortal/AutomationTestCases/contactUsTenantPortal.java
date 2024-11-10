@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -30,9 +31,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class contactUsTenantPortal extends base {
+public class contactUsTenantPortal {
 
-	WebDriver driver = new FirefoxDriver();
+	WebDriver driver = new ChromeDriver();
     WebDriverWait wait;
 
     private String baseUrl;
@@ -75,14 +76,13 @@ public class contactUsTenantPortal extends base {
         }
 	}
     
-    private void login() throws InterruptedException {
-        // login code
-    	
-    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    	WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
+    private void login() throws InterruptedException { // login code
+
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
 		email.sendKeys(username);
 
-		WebElement passcode = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[2]/input"));
+		WebElement passcode = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[2]/div/input"));
 		passcode.sendKeys(password);
 
 		WebElement loginButton = driver
@@ -90,11 +90,11 @@ public class contactUsTenantPortal extends base {
 		loginButton.click();
 
 		WebElement userName = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/nav[1]/div/div[1]/div[2]/span[2]"));
-		AssertJUnit.assertEquals("Mahmoud Abbas", userName.getText());
-		AssertJUnit.assertEquals(tenant, userName.getText());
+		AssertJUnit.assertEquals(tenant, userName.getText()); 
+		
 
 		Thread.sleep(2000);
-    }
+	}
 	
 	
 
@@ -104,7 +104,7 @@ public class contactUsTenantPortal extends base {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		WebElement contactUsTab = driver
-				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/nav[1]/div/div[2]/div[1]/a[11]"));
+				.findElement(By.linkText("Contact us"));
 		contactUsTab.click();
 
 		WebElement formTitle = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/h4"));

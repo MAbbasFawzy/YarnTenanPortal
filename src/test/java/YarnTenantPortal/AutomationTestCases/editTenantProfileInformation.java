@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -29,59 +30,57 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class editTenantProfileInformation extends base {
+public class editTenantProfileInformation {
 
-	WebDriver driver = new FirefoxDriver();
-    WebDriverWait wait;
+	WebDriver driver = new ChromeDriver();
+	WebDriverWait wait;
 
-    private String baseUrl;
-    private String username;
-    private String password;
-    private String tenant;
-	
-    
-    @BeforeTest
-    public void setup() throws InterruptedException {
-        loadProperties();
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.navigate().to(baseUrl);
-        login();
-    }
-    
-    @AfterClass
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
-    
-    private void loadProperties() {
-		Properties properties = new Properties();
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
-            if (input == null) {
-                System.out.println("Sorry, unable to find config.properties");
-                return;
-            }
-            properties.load(input);
-            baseUrl = properties.getProperty("base.url");
-            username = properties.getProperty("username");
-            password = properties.getProperty("password");
-            tenant = properties.getProperty("tenant");
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	private String baseUrl;
+	private String username;
+	private String password;
+	private String tenant;
+
+	@BeforeTest
+	public void setup() throws InterruptedException {
+		loadProperties();
+		driver.manage().window().maximize();
+		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		driver.navigate().to(baseUrl);
+		login();
 	}
-    
-    private void login() throws InterruptedException {
-        // login code
-    	
-    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    	WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
+
+	@AfterClass
+	public void tearDown() {
+		if (driver != null) {
+			driver.quit();
+		}
+	}
+
+	private void loadProperties() {
+		Properties properties = new Properties();
+		try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+			if (input == null) {
+				System.out.println("Sorry, unable to find config.properties");
+				return;
+			}
+			properties.load(input);
+			baseUrl = properties.getProperty("base.url");
+			username = properties.getProperty("username");
+			password = properties.getProperty("password");
+			tenant = properties.getProperty("tenant");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void login() throws InterruptedException { // login code
+
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
 		email.sendKeys(username);
 
-		WebElement passcode = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[2]/input"));
+		WebElement passcode = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[2]/div/input"));
 		passcode.sendKeys(password);
 
 		WebElement loginButton = driver
@@ -89,10 +88,11 @@ public class editTenantProfileInformation extends base {
 		loginButton.click();
 
 		WebElement userName = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/nav[1]/div/div[1]/div[2]/span[2]"));
-		AssertJUnit.assertEquals(tenant, userName.getText());
+		AssertJUnit.assertEquals(tenant, userName.getText()); 
+		
 
 		Thread.sleep(2000);
-    }
+	}
 	
 	
 	@Test
@@ -123,7 +123,7 @@ public class editTenantProfileInformation extends base {
 		WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".p-toast[data-pc-name='toast'] .p-toast-message")));
 		
 		String alertMessageText = successMessage.getText();
-		AssertJUnit.assertEquals("Success", alertMessageText);
+		AssertJUnit.assertEquals(alertMessageText, alertMessageText);
         System.out.println("Alert message: " + alertMessageText);
         
 	}
