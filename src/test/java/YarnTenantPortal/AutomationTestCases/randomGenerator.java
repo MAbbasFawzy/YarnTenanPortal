@@ -4,10 +4,10 @@ import java.util.Random;
 
 public class randomGenerator {
 
-	private static final String[] FIRST_NAMES = {"John", "Jane", "Bob", "Alice", "Mike", "Sarah", "Emily", "David"};
-    private static final String[] LAST_NAMES = {"Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson"};
-    private static final String[] EMAIL_DOMAINS = {"gmail.com", "yahoo.com", "hotmail.com", "outlook.com"};
-    private static final String[] NUMBERS = {"210", "215", "315", "450", "500", "100", "150", "200", "180"};
+	private static final String[] FIRST_NAMES = {"Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson"};
+    private static final String[] LAST_NAMES = {"John", "Jane", "Bob", "Alice", "Mike", "Sarah", "Emily", "David"};
+    private static final String[] EMAIL_DOMAINS = {"gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "yarn.io", "yarn.dev", "yarn.com"};
+    private static final String[] NUMBERS = {"212020", "221205", "322105", "422500", "520200", "120020", "125020", "252200", "212500", "252020", "212255", "351205", "422550", "522055", "122500", "152500", "252550", "212560"};
 
     public static class Visitor {
         public String firstName;

@@ -6,8 +6,6 @@
  * 
  */
 
-
-
 package YarnTenantPortal.AutomationTestCases;
 
 import java.io.IOException;
@@ -152,22 +150,25 @@ public class visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVis
 		Thread.sleep(4000);
 		WebElement visitorFirstName = driver.findElement(
 				By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[1]/input"));
-		visitorFirstName.sendKeys(visitor.firstName + 2);
+		visitorFirstName.sendKeys(visitor.firstName + " " + 2);
 
 		Thread.sleep(2000);
 		WebElement visitorLastName = driver.findElement(
 				By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[2]/input"));
-		visitorLastName.sendKeys(visitor.lastName + 2);
+		visitorLastName.sendKeys(visitor.lastName + " " + 2);
 
 		Thread.sleep(2000);
-		WebElement email = driver.findElement(
-				By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[3]/input"));
-		email.sendKeys(visitor.email + 2);
+		WebElement email = driver.findElement(By.xpath(
+				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[3]/div[1]/input"));
+		email.sendKeys(visitor.email);
 
 		Thread.sleep(4000);
 		WebElement nationality = driver.findElement(By.xpath(
 				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[4]/div[1]/span"));
 		nationality.click();
+
+		WebElement searchBox = driver.findElement(By.xpath("//input[@role='searchbox']"));
+		searchBox.sendKeys("Egypt");
 
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -177,10 +178,22 @@ public class visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVis
 			WebElement cancelButton = alertDialog.findElement(By.cssSelector("button[type='button']"));
 			cancelButton.click();
 		} catch (Exception e) {
+			/*
+			 * Thread.sleep(6000); WebElement nationalityOption =
+			 * driver.findElement(By.xpath("/html/body/div[4]/div[2]/ul/li[1]"));
+			 * Thread.sleep(6000); nationalityOption.click();
+			 */
+
 			Thread.sleep(6000);
-			WebElement nationalityOption = driver.findElement(By.xpath("/html/body/div[4]/div[2]/ul/li[1]"));
-			Thread.sleep(6000);
+			WebElement nationalityOption = driver.findElement(By.xpath("/html[1]/body[1]/div[4]/div[2]/ul[1]/li[1]"));
+			// WebElement nationalityOption =
+			// driver.findElement(By.xpath("//li[@class='p-dropdown-item p-focus' and
+			// @aria-label='Egypt']"));
 			nationalityOption.click();
+
+			/*
+			 * Thread.sleep(6000); nationalityOption.click();
+			 */
 		}
 
 		Thread.sleep(4000);
@@ -197,21 +210,27 @@ public class visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVis
 				By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[6]/input"));
 		documentNumber.sendKeys(visitor.numbers + 2);
 
-		// Get today's date
+		// Format today's date
 		LocalDate today = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 		String formattedDate = today.format(formatter);
 
-		Thread.sleep(2000);
+		// Locate the date of birth input and click it
 		WebElement dateOfBirth = driver.findElement(By.xpath(
 				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[7]/span/input"));
 		dateOfBirth.click();
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("pv_id_10_panel"))); // Adjust the ID as needed
+		// Wait for the date picker to be visible
+		WebDriverWait waitBirthDate = new WebDriverWait(driver, Duration.ofSeconds(2));
+		waitBirthDate
+				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='p-datepicker-group']"))); // Adjust the ID as needed
+																														
 
-		WebElement birthDateToSelect = driver
-				.findElement(By.xpath("//td[@aria-label='" + today.getDayOfMonth() + "']"));
+		// Wait for the specific day to be clickable
+		Thread.sleep(500);
+		WebElement birthDateToSelect = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[@class='p-datepicker-today']")));
+		Thread.sleep(2000);
 		birthDateToSelect.click();
 
 		Thread.sleep(2000);
@@ -267,8 +286,8 @@ public class visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVis
 
 		Thread.sleep(4000);
 		WebElement extraVisitorEmail = driver.findElement(By
-				.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div[2]/div[2]/div/div/div[1]/div[3]/input"));
-		extraVisitorEmail.sendKeys(visitor.email + "1");
+				.xpath("//input[@class='p-inputtext p-component flex w-full h-10' and @data-pc-name='inputtext' and @data-pc-section='root']"));
+		extraVisitorEmail.sendKeys(visitor.email);
 
 		Thread.sleep(6000);
 		WebElement extraVisitorNationality = driver.findElement(By.xpath(
@@ -292,10 +311,9 @@ public class visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVis
 
 			Thread.sleep(4000);
 			WebElement nationalityOptionExtraVisitor = wait
-					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"pv_id_30_0\"]")));
+					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@id='pv_id_28_0']")));
 			nationalityOptionExtraVisitor.click();
 		}
-
 
 		Thread.sleep(4000);
 		WebElement documentTypeListExtraVisitor = driver.findElement(By
@@ -306,29 +324,29 @@ public class visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVis
 		WebElement documentTypeListOptionExtraVisitor = driver
 				.findElement(By.xpath("/html/body/div[4]/div[2]/ul/li[1]"));
 		documentTypeListOptionExtraVisitor.click();
-		
+
 		try {
-            // Your previous code to navigate and perform actions
+			// Your previous code to navigate and perform actions
 
-            // Wait for the pop-up to be visible
-            WebDriverWait waitPopUpExistingVisitor = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement alertDialog = waitPopUpExistingVisitor.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".p-dialog")));
+			// Wait for the pop-up to be visible
+			WebDriverWait waitPopUpExistingVisitor = new WebDriverWait(driver, Duration.ofSeconds(10));
+			WebElement alertDialog = waitPopUpExistingVisitor
+					.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".p-dialog")));
 
-            // Locate the "Okay" button within the pop-up
-            WebElement okayButton = alertDialog.findElement(By.xpath("/html/body/div[4]/div/div[2]/div/div[5]/button"));
+			// Locate the "Okay" button within the pop-up
+			WebElement okayButton = alertDialog.findElement(By.xpath("/html/body/div[4]/div/div[2]/div/div[5]/button"));
 
-            // Click the "Okay" button to close the pop-up
-            okayButton.click();
+			// Click the "Okay" button to close the pop-up
+			okayButton.click();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		Thread.sleep(4000);
 		WebElement documentNumberExtraVisitor = driver.findElement(By
 				.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div[2]/div[2]/div/div/div[1]/div[6]/input"));
 		documentNumberExtraVisitor.sendKeys(visitor.numbers + "1");
-		
 
 		Thread.sleep(4000);
 		WebElement birthDateExtraVisitor = driver.findElement(By.xpath(
@@ -341,18 +359,19 @@ public class visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVis
 		WebElement birthDateToSelectExtraVisitor = driver
 				.findElement(By.xpath("//td[@aria-label='" + today.getDayOfMonth() + "']"));
 		birthDateToSelectExtraVisitor.click();
-		
-		
+
 		Thread.sleep(4000);
-		WebElement genderExtraVisitor = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div[2]/div[2]/div/div/div[1]/div[8]/div[1]"));
+		WebElement genderExtraVisitor = driver.findElement(By
+				.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div[2]/div[2]/div/div/div[1]/div[8]/div[1]"));
 		genderExtraVisitor.click();
 
 		Thread.sleep(4000);
 		WebElement genderExtraVisitorOption = driver.findElement(By.xpath("/html/body/div[4]/div/ul/li[1]"));
 		genderExtraVisitorOption.click();
-		
+
 		Thread.sleep(4000);
-		WebElement phoneNumberExtraVisitor = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div[2]/div[2]/div/div/div[1]/div[9]/input"));
+		WebElement phoneNumberExtraVisitor = driver.findElement(By
+				.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div[2]/div[2]/div/div/div[1]/div[9]/input"));
 		phoneNumberExtraVisitor.sendKeys("01005710460");
 
 		Thread.sleep(4000);
@@ -360,7 +379,8 @@ public class visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVis
 		vehicleExtraVisitor.click();
 
 		Thread.sleep(4000);
-		WebElement extraCarPlateType = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div[1]"));
+		WebElement extraCarPlateType = driver.findElement(By.xpath(
+				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div[2]/div[2]/div/div/div[2]/div[2]/div/div[1]/div[1]"));
 		extraCarPlateType.click();
 
 		Thread.sleep(4000);
@@ -368,8 +388,8 @@ public class visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVis
 		extraCarPlateTypeOption.click();
 
 		Thread.sleep(4000);
-		WebElement extraCarPlateNumber = driver
-				.findElement(By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div[2]/div[2]/div/div/div[2]/div[2]/div/div[2]/input"));
+		WebElement extraCarPlateNumber = driver.findElement(By.xpath(
+				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div[2]/div[2]/div/div/div[2]/div[2]/div/div[2]/input"));
 		extraCarPlateNumber.sendKeys(visitor.numbers + "1");
 
 		Thread.sleep(6000);
@@ -385,6 +405,5 @@ public class visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVis
 		System.out.println("Worked fine");
 
 	}
-	
-	
+
 }

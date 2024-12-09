@@ -26,7 +26,7 @@ import org.testng.annotations.Test;
 
 public class loginAndNavigation {
 
-	WebDriver driver = new ChromeDriver();
+	WebDriver driver = new FirefoxDriver();
 	WebDriverWait wait;
 
 	private String baseUrl;

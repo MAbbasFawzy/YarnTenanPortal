@@ -7,8 +7,6 @@
  * 
  */
 
-
-
 package YarnTenantPortal.AutomationTestCases;
 
 import static org.testng.Assert.assertEquals;
@@ -35,7 +33,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class visitorOneTimeOneVisitorWithVehicleSaudiBlockedVisitor extends randomGenerator {
-	
+
 	WebDriver driver = new ChromeDriver();
 	WebDriverWait wait;
 	private String baseUrl;
@@ -95,7 +93,7 @@ public class visitorOneTimeOneVisitorWithVehicleSaudiBlockedVisitor extends rand
 
 		Thread.sleep(2000);
 	}
-	
+
 	@Test(priority = 0)
 	public void chooseVisitorTabAndAddVisitor() throws InterruptedException {
 
@@ -164,14 +162,17 @@ public class visitorOneTimeOneVisitorWithVehicleSaudiBlockedVisitor extends rand
 		visitorLastName.sendKeys(visitor.lastName);
 
 		Thread.sleep(2000);
-		WebElement email = driver.findElement(
-				By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[3]/input"));
+		WebElement email = driver.findElement(By.xpath(
+				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[3]/div[1]/input"));
 		email.sendKeys(visitor.email);
 
 		Thread.sleep(4000);
 		WebElement nationality = driver.findElement(By.xpath(
 				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[4]/div[1]/span"));
 		nationality.click();
+
+		WebElement searchBox = driver.findElement(By.xpath("//input[@role='searchbox']"));
+		searchBox.sendKeys("Egypt");
 
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -182,9 +183,15 @@ public class visitorOneTimeOneVisitorWithVehicleSaudiBlockedVisitor extends rand
 			cancelButton.click();
 		} catch (Exception e) {
 			Thread.sleep(6000);
-			WebElement nationalityOption = driver.findElement(By.xpath("/html/body/div[4]/div[2]/ul/li[1]"));
-			Thread.sleep(6000);
+			WebElement nationalityOption = driver.findElement(By.xpath("/html[1]/body[1]/div[4]/div[2]/ul[1]/li[1]"));
+			// WebElement nationalityOption =
+			// driver.findElement(By.xpath("//li[@class='p-dropdown-item p-focus' and
+			// @aria-label='Egypt']"));
 			nationalityOption.click();
+
+			/*
+			 * Thread.sleep(6000); nationalityOption.click();
+			 */
 		}
 
 		Thread.sleep(4000);
@@ -201,21 +208,48 @@ public class visitorOneTimeOneVisitorWithVehicleSaudiBlockedVisitor extends rand
 				By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[6]/input"));
 		documentNumber.sendKeys(visitor.numbers);
 
-		// Get today's date
+		/*
+		 * // Get today's date LocalDate today = LocalDate.now(); DateTimeFormatter
+		 * formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy"); String formattedDate =
+		 * today.format(formatter);
+		 * 
+		 * Thread.sleep(2000); WebElement dateOfBirth = driver.findElement(By.xpath(
+		 * "/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[7]/span/input"
+		 * )); dateOfBirth.click();
+		 * 
+		 * WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		 * wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(
+		 * "pv_id_10_panel"))); // Adjust the ID as needed
+		 * 
+		 * WebElement birthDateToSelect = driver
+		 * .findElement(By.xpath("//td[@aria-label='" + today.getDayOfMonth() + "']"));
+		 * birthDateToSelect.click();
+		 */
+
+		// Format today's date
 		LocalDate today = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 		String formattedDate = today.format(formatter);
 
-		Thread.sleep(2000);
+		// Locate the date of birth input and click it
 		WebElement dateOfBirth = driver.findElement(By.xpath(
 				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[7]/span/input"));
 		dateOfBirth.click();
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("pv_id_10_panel"))); // Adjust the ID as needed
+		// Wait for the date picker to be visible
+		WebDriverWait waitBirthDate = new WebDriverWait(driver, Duration.ofSeconds(2));
+		waitBirthDate
+				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='p-datepicker-group']"))); // Adjust
+																														// the
+																														// ID
+																														// as
+																														// needed
 
-		WebElement birthDateToSelect = driver
-				.findElement(By.xpath("//td[@aria-label='" + today.getDayOfMonth() + "']"));
+		// Wait for the specific day to be clickable
+		Thread.sleep(500);
+		WebElement birthDateToSelect = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[@class='p-datepicker-today']")));
+		Thread.sleep(2000);
 		birthDateToSelect.click();
 
 		Thread.sleep(2000);

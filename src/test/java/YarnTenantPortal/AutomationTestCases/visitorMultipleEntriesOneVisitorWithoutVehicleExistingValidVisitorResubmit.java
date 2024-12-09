@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -164,14 +165,21 @@ public class visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorR
 		visitorLastName.sendKeys("Brown");
 
 		Thread.sleep(2000);
-		WebElement email = driver.findElement(
-				By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[3]/input"));
+		WebElement email = driver.findElement(By.xpath(
+				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[3]/div[1]/input"));
+		//email.sendKeys(visitor.email);
 		email.sendKeys("emilybrown80@hotmail.com");
 
 		Thread.sleep(4000);
 		WebElement nationality = driver.findElement(By.xpath(
 				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[4]/div[1]/span"));
 		nationality.click();
+		
+		/*
+		 * WebElement searchBox =
+		 * driver.findElement(By.xpath("//input[@role='searchbox']"));
+		 * searchBox.sendKeys("Egypt");
+		 */
 
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -181,15 +189,30 @@ public class visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorR
 			WebElement cancelButton = alertDialog.findElement(By.cssSelector("button[type='button']"));
 			cancelButton.click();
 		} catch (Exception e) {
-			e.printStackTrace();
+			/*
+			 * Thread.sleep(6000); WebElement nationalityOption =
+			 * driver.findElement(By.cssSelector("#pv_id_11_0")); Thread.sleep(6000);
+			 * nationalityOption.click();
+			 */
 		}
+		Thread.sleep(6000);
+		WebElement nationalityList = driver.findElement(By.xpath(
+				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[4]/div[1]/span"));
+		Thread.sleep(6000);
+		nationalityList.click();
 		
-		Thread.sleep(4000);
-		nationality.click();
 		Thread.sleep(6000);
-		WebElement nationalityOption = driver.findElement(By.xpath("/html/body/div[4]/div[2]/ul/li[1]"));
+		WebElement search = driver.findElement(By.xpath("//input[@role='searchbox']"));
+		search.sendKeys("Egypt");
+		
 		Thread.sleep(6000);
+		WebElement nationalityOption = driver.findElement(By.xpath("/html[1]/body[1]/div[4]/div[2]/ul[1]/li[1]"));
+		//WebElement nationalityOption = driver.findElement(By.xpath("//li[@class='p-dropdown-item p-focus' and @aria-label='Egypt']"));
 		nationalityOption.click();
+		
+		/*
+		 * Thread.sleep(6000); nationalityOption.click();
+		 */
 
 		Thread.sleep(4000);
 		WebElement documentType = driver.findElement(By.xpath(
@@ -215,8 +238,8 @@ public class visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorR
 				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[7]/span/input"));
 		dateOfBirth.click();
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("pv_id_10_panel"))); // Adjust the ID as needed
+		WebDriverWait waitDatePicker = new WebDriverWait(driver, Duration.ofSeconds(10));
+		waitDatePicker.until(ExpectedConditions.visibilityOfElementLocated(By.id("pv_id_10_panel"))); // Adjust the ID as needed
 
 		WebElement birthDateToSelect = driver
 				.findElement(By.xpath("//td[@aria-label='" + today.getDayOfMonth() + "']"));

@@ -162,14 +162,17 @@ public class visitorMulipleEntriesOneVisitorWithoutVehicleExisitingValidVisitorW
 		visitorLastName.sendKeys("Brown");
 
 		Thread.sleep(2000);
-		WebElement email = driver.findElement(
-				By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[3]/input"));
-		email.sendKeys("emilybrown80@hotmail.com");
+		WebElement email = driver.findElement(By.xpath(
+				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[3]/div[1]/input"));
+		email.sendKeys(visitor.email);
 
 		Thread.sleep(4000);
 		WebElement nationality = driver.findElement(By.xpath(
 				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[4]/div[1]/span"));
 		nationality.click();
+		
+		WebElement searchBox = driver.findElement(By.xpath("//input[@role='searchbox']"));
+		searchBox.sendKeys("Egypt");
 
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -182,12 +185,15 @@ public class visitorMulipleEntriesOneVisitorWithoutVehicleExisitingValidVisitorW
 			e.printStackTrace();
 		}
 		
-		Thread.sleep(4000);
-		nationality.click();
+		
 		Thread.sleep(6000);
-		WebElement nationalityOption = driver.findElement(By.xpath("/html/body/div[4]/div[2]/ul/li[1]"));
-		Thread.sleep(6000);
+		WebElement nationalityOption = driver.findElement(By.xpath("/html[1]/body[1]/div[4]/div[2]/ul[1]/li[1]"));
+		//WebElement nationalityOption = driver.findElement(By.xpath("//li[@class='p-dropdown-item p-focus' and @aria-label='Egypt']"));
 		nationalityOption.click();
+		
+		/*
+		 * Thread.sleep(6000); nationalityOption.click();
+		 */
 
 		Thread.sleep(4000);
 		WebElement documentType = driver.findElement(By.xpath(

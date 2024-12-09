@@ -19,6 +19,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -32,7 +33,7 @@ import org.testng.annotations.Test;
 
 public class subscribeToService {
 
-	WebDriver driver = new ChromeDriver();
+	WebDriver driver = new FirefoxDriver();
 
 	WebDriverWait wait;
 	private String baseUrl;
@@ -79,7 +80,8 @@ public class subscribeToService {
 		WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
 		email.sendKeys(username);
 
-		WebElement passcode = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[2]/div/input"));
+		WebElement passcode = driver
+				.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[2]/div/input"));
 		passcode.sendKeys(password);
 
 		WebElement loginButton = driver
@@ -87,8 +89,7 @@ public class subscribeToService {
 		loginButton.click();
 
 		WebElement userName = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/nav[1]/div/div[1]/div[2]/span[2]"));
-		AssertJUnit.assertEquals(tenant, userName.getText()); 
-		
+		AssertJUnit.assertEquals(tenant, userName.getText());
 
 		Thread.sleep(2000);
 	}
@@ -147,13 +148,43 @@ public class subscribeToService {
 				.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[5]/textarea"));
 		serviceDescription.sendKeys("I want to subscribe to a higher network connection.");
 
-		Thread.sleep(2000);
-		WebElement preferredVisitDate = driver.findElement(By.cssSelector("input[type='date']"));
-		preferredVisitDate.sendKeys("16-9-2024");
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebElement dateInput = driver
+				.findElement(By.xpath("//input[@role='combobox' and @class='p-inputtext p-component']"));
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", dateInput);
 
-		Thread.sleep(2000);
-		WebElement preferredVisitTime = driver.findElement(By.cssSelector("input[type='time']"));
-		preferredVisitTime.sendKeys("18:30");
+		// Click on the next button to navigate to November if needed
+		WebElement nextButton = driver.findElement(By.className("p-datepicker-next"));
+		nextButton.click(); // Click if you need to go to the next month
+
+		// Wait for the date picker to update
+		Thread.sleep(4000); // Wait for 1 second
+
+		// Select the date (30)
+		WebElement dateToSelect = driver.findElement(By.xpath("//td[@aria-label='30']"));
+		dateToSelect.click();
+
+		// Wait for the time picker to be visible (if necessary)
+		Thread.sleep(4000); // Wait for 1 second
+
+		// Set the hour (4 PM)
+		WebElement hourIncrementButton = driver
+				.findElement(By.xpath("//div[@class='p-hour-picker']//button[@aria-label='Next Hour']"));
+		for (int i = 0; i < 4; i++) { // Increment to 4 PM
+			hourIncrementButton.click();
+		}
+
+		// Set the minutes (33)
+		WebElement minuteIncrementButton = driver
+				.findElement(By.xpath("//div[@class='p-minute-picker']//button[@aria-label='Next Minute']"));
+		for (int i = 0; i < 33; i++) { // Increment to 33 minutes
+			minuteIncrementButton.click();
+		}
+
+		// Set AM/PM to PM
+		WebElement ampmButton = driver.findElement(By.xpath("//div[@class='p-ampm-picker']//button[@aria-label='pm']"));
+		ampmButton.click();
+
 
 		Thread.sleep(2000);
 		WebElement submitSubscriptionButton = driver
@@ -161,7 +192,7 @@ public class subscribeToService {
 		submitSubscriptionButton.click();
 
 		Thread.sleep(4000);
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+		
 		WebElement successMessage = wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.cssSelector(".p-toast[data-pc-name='toast'] .p-toast-message")));
 
@@ -169,4 +200,5 @@ public class subscribeToService {
 		System.out.println("Alert message: " + alertMessageText);
 
 	}
+
 }

@@ -2,28 +2,28 @@
 <testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-11-10T09:20:09 EET" name="Default suite" finished-at="2024-11-10T09:22:01 EET" duration-ms="112033">
+  <suite started-at="2024-12-03T00:38:28 EET" name="Default suite" finished-at="2024-12-03T00:41:51 EET" duration-ms="203010">
     <groups>
     </groups>
-    <test started-at="2024-11-10T09:20:09 EET" name="Default test" finished-at="2024-11-10T09:22:01 EET" duration-ms="112033">
-      <class name="YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorResubmit">
-        <test-method is-config="true" signature="setup()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorResubmit@5ddea849]" started-at="2024-11-10T09:20:09 EET" name="setup" finished-at="2024-11-10T09:20:19 EET" duration-ms="10395" status="PASS">
+    <test started-at="2024-12-03T00:38:28 EET" name="Default test" finished-at="2024-12-03T00:41:51 EET" duration-ms="203010">
+      <class name="YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVisitorBlocked">
+        <test-method is-config="true" signature="setup()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVisitorBlocked@788fcafb]" started-at="2024-12-03T00:38:28 EET" name="setup" finished-at="2024-12-03T00:38:51 EET" duration-ms="23141" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="chooseVisitorTabAndAddVisitor()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorResubmit@5ddea849]" started-at="2024-11-10T09:20:19 EET" name="chooseVisitorTabAndAddVisitor" finished-at="2024-11-10T09:21:58 EET" duration-ms="98558" status="PASS">
+        <test-method signature="chooseVisitorTabAndAddVisitor()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVisitorBlocked@788fcafb]" started-at="2024-12-03T00:38:51 EET" name="chooseVisitorTabAndAddVisitor" finished-at="2024-12-03T00:41:49 EET" duration-ms="177988" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- chooseVisitorTabAndAddVisitor -->
-        <test-method signature="checkAlertForMaxNumberOfVisitors()[pri:1, instance:YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorResubmit@5ddea849]" started-at="2024-11-10T09:21:58 EET" name="checkAlertForMaxNumberOfVisitors" finished-at="2024-11-10T09:21:58 EET" duration-ms="48" status="PASS">
+        <test-method signature="checkDefaultVisitorStatus()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVisitorBlocked@788fcafb]" started-at="2024-12-03T00:41:49 EET" name="checkDefaultVisitorStatus" finished-at="2024-12-03T00:41:49 EET" depends-on-methods="YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVisitorBlocked.chooseVisitorTabAndAddVisitor" duration-ms="3" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- checkAlertForMaxNumberOfVisitors -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorResubmit@5ddea849]" started-at="2024-11-10T09:21:58 EET" name="tearDown" finished-at="2024-11-10T09:22:01 EET" duration-ms="2982" status="PASS">
+        </test-method> <!-- checkDefaultVisitorStatus -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVisitorBlocked@788fcafb]" started-at="2024-12-03T00:41:49 EET" name="tearDown" finished-at="2024-12-03T00:41:51 EET" duration-ms="1820" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-      </class> <!-- YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesOneVisitorWithoutVehicleExistingValidVisitorResubmit -->
+      </class> <!-- YarnTenantPortal.AutomationTestCases.visitorMultipleEntriesGroupOfVisitorsWithVehicleSaudiNonSaudiOneVisitorBlocked -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
