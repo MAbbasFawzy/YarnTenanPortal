@@ -30,7 +30,7 @@ import org.testng.annotations.Test;
 
 public class submitRequest {
 
-	WebDriver driver = new FirefoxDriver();
+	WebDriver driver = new ChromeDriver();
 	WebDriverWait wait;
 	private String baseUrl;
 	private String username;
@@ -73,7 +73,7 @@ public class submitRequest {
 
 	private void login() throws InterruptedException { // login code
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
 		email.sendKeys(username);
 
@@ -94,56 +94,56 @@ public class submitRequest {
 	@Test
 	public void chooseServicesSearchAndSubmitRequest() throws InterruptedException {
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
-		Thread.sleep(8000);
+		//Thread.sleep(8000);
 
 		WebElement servicesButton = driver.findElement(By.linkText("Services"));
 		servicesButton.click();
 
-		Thread.sleep(8000);
+		Thread.sleep(500);
 		WebElement searchBox = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/div/input"));
-		Thread.sleep(4000);
+		Thread.sleep(500);
 		searchBox.click();
-		Thread.sleep(4000);
+		Thread.sleep(500);
 		searchBox.sendKeys("Internet");
 
-		Thread.sleep(4000);
+		Thread.sleep(1000);
 		WebElement serviceTypeButton = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[3]/div"));
 		serviceTypeButton.click();
 
-		Thread.sleep(4000);
+		Thread.sleep(500);
 		WebElement serviceTitle = driver
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/div[1]/h4/span[2]"));
 		assertEquals(serviceTitle.getText(), serviceTitle.getText());
 
-		Thread.sleep(4000);
+		Thread.sleep(500);
 		WebElement requestServiceButton = driver
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/div[1]/div/button[1]"));
 		requestServiceButton.click();
 
-		Thread.sleep(6000);
+		Thread.sleep(500);
 		WebElement servicesDropDown = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[1]/div/div"));
 		servicesDropDown.click();
 
-		Thread.sleep(6000);
-		WebElement serviceOption = driver.findElement(By.xpath("//*[@id=\"pv_id_8_0\"]"));
+		Thread.sleep(500);
+		WebElement serviceOption = driver.findElement(By.xpath("//li[contains(@class, 'p-dropdown-item') and .//span[text()='No Internet Connection']]"));
 		serviceOption.click();
 
-		Thread.sleep(8000);
+		Thread.sleep(500);
 		WebElement serviceCategory = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[2]/div/div"));
 		serviceCategory.click();
 
-		Thread.sleep(8000);
+		Thread.sleep(500);
 		WebElement serviceCategoryOption = driver.findElement(By.xpath("/html/body/div[5]/div[2]/ul/li[1]"));
 		serviceCategoryOption.click();
 
-		Thread.sleep(4000);
-		WebElement description = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[3]/textarea"));
+		Thread.sleep(500);
+		WebElement description = driver.findElement(By.xpath("//textarea[@class='w-full']"));
 		description.sendKeys("Testing description new request is added.");
 		
-		Thread.sleep(4000);
-		WebElement preferredVisitDate = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[5]/div[1]/span"));
+		Thread.sleep(500);
+		WebElement preferredVisitDate = driver.findElement(By.xpath("//input[@role='combobox']"));
 		preferredVisitDate.click();
 		
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
@@ -156,14 +156,14 @@ public class submitRequest {
 		nextButton.click(); // Click if you need to go to the next month
 
 		// Wait for the date picker to update
-		Thread.sleep(4000); // Wait for 1 second
+		Thread.sleep(500); // Wait for 1 second
 
 		// Select the date (30)
 		WebElement dateToSelect = driver.findElement(By.xpath("//td[@aria-label='30']"));
 		dateToSelect.click();
 		
 		// Wait for the time picker to be visible (if necessary)
-		Thread.sleep(4000); // Wait for 1 second
+		Thread.sleep(500); // Wait for 1 second
 
 		// Set the hour (4 PM)
 		WebElement hourIncrementButton = driver.findElement(By.xpath("//div[@class='p-hour-picker']//button[@aria-label='Next Hour']"));
@@ -182,7 +182,7 @@ public class submitRequest {
 		ampmButton.click();
 		
 
-		Thread.sleep(4000);
+		Thread.sleep(500);
 		WebElement submitRequest = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[7]/button"));
 		submitRequest.click();
 
@@ -200,7 +200,7 @@ public class submitRequest {
 	@Test(dependsOnMethods = "chooseServicesSearchAndSubmitRequest")
 	public void checkNewRequestAdded() throws InterruptedException {
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
 		Thread.sleep(4000);
 		WebElement myRequestsTab = driver.findElement(By.linkText("My Requests"));

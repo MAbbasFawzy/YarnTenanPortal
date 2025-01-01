@@ -80,7 +80,7 @@ public class editPassword {
 
 	private void login() throws InterruptedException { // login code
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
 		WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
 		email.sendKeys(newusername);
 
@@ -101,10 +101,9 @@ public class editPassword {
 	@Test(priority = 0)
 	public void editProfilePassword() throws InterruptedException {
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
 
-		WebElement profileIcon = driver
-				.findElement(By.xpath("/html/body/div[1]/main/nav[1]/div/div[1]/div[2]/a[4]/img"));
+		WebElement profileIcon = driver.findElement(By.xpath("//img[@alt='Avatar']"));
 		profileIcon.click();
 
 		Thread.sleep(2000);
@@ -155,7 +154,7 @@ public class editPassword {
 	@Test(priority = 1)
 	public void editProfileUsername() throws InterruptedException {
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
 
 		WebElement changeUsernameSection = driver
 				.findElement(By.xpath("/html/body/div[1]/main/div/div/div[2]/div/div/div[2]/a[2]"));
@@ -190,14 +189,14 @@ public class editPassword {
 	@Test(priority = 2)
 	public void loginWithNewPassword() throws InterruptedException {
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
 
 		Thread.sleep(8000);
-		WebElement logoutButton = driver.findElement(By.cssSelector(
-				"#__nuxt > main > nav.fixed.z-10.top-0.right-0.w-full.border.border-b.shadow-xl.bg-\\[var\\(--c1\\)\\].hidden.sm\\:block.print\\:\\!hidden > div > div.flex.justify-between.items-center.h-22.border-b > div.flex.items-center.gap-4 > a:nth-child(7) > svg"));
+		WebElement logoutButton = driver.findElement(By.xpath(
+				"/html[1]/body[1]/div[1]/main[1]/nav[1]/div[1]/div[1]/div[2]/a[3]/*[name()='svg'][1]"));
 		logoutButton.click();
 
-		Thread.sleep(10000);
+		Thread.sleep(8000);
 		driver.getCurrentUrl();
 
 		Thread.sleep(2000);

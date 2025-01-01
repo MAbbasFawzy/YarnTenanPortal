@@ -76,7 +76,7 @@ public class editTenantProfileInformation {
 
 	private void login() throws InterruptedException { // login code
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
 		email.sendKeys(username);
 
@@ -98,27 +98,27 @@ public class editTenantProfileInformation {
 	@Test
 	public void editProfile() throws InterruptedException {
 		
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		
-		WebElement profileIcon = driver.findElement(By.xpath("/html/body/div[1]/main/nav[1]/div/div[1]/div[2]/a[4]/img"));
+		WebElement profileIcon = driver.findElement(By.xpath("//img[@alt='Avatar']"));
 		profileIcon.click();
 		
-		Thread.sleep(2000);
+		Thread.sleep(500);
 		driver.getCurrentUrl();
 		
-		Thread.sleep(2000);
+		Thread.sleep(500);
 		WebElement editButton = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/div[1]/button[1]"));
 		editButton.click();
 		
-		Thread.sleep(2000);
+		Thread.sleep(500);
 		WebElement jobTitle = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/form/div[4]/input"));
 		jobTitle.sendKeys("Quality control engineer / Quality Assurance Engineer");
 		
-		Thread.sleep(4000);
+		Thread.sleep(500);
 		WebElement submitButtonForEditProfile = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/form/div[5]/button[1]"));
 		submitButtonForEditProfile.click();
 		
-		Thread.sleep(4000);
+		Thread.sleep(500);
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
 		WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".p-toast[data-pc-name='toast'] .p-toast-message")));
 		

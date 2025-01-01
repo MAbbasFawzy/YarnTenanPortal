@@ -132,15 +132,15 @@ public class subscribeToService {
 		servicesList.click();
 
 		Thread.sleep(2000);
-		WebElement serviceOption = driver.findElement(By.xpath("//*[@id=\"pv_id_8_0\"]"));
+		WebElement serviceOption = driver.findElement(By.xpath("//li[@aria-label='Internet Subscription - 12 Months']"));
 		serviceOption.click();
 
 		Thread.sleep(4000);
-		WebElement serviceCategoryList = driver.findElement(By.xpath("//*[@id=\"pv_id_13\"]/div"));
+		WebElement serviceCategoryList = driver.findElement(By.xpath("/html[1]/body[1]/div[4]/div[1]/div[2]/form[1]/div[3]/div[1]"));
 		serviceCategoryList.click();
 
-		Thread.sleep(2000);
-		WebElement subCategoryList = driver.findElement(By.xpath("//*[@id=\"pv_id_13_0\"]"));
+		Thread.sleep(4000);
+		WebElement subCategoryList = driver.findElement(By.xpath("/html[1]/body[1]/div[5]/div[2]/ul[1]/li[1]"));
 		subCategoryList.click();
 
 		Thread.sleep(1000);

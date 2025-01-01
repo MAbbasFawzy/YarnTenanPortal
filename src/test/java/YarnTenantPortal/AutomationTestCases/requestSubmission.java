@@ -66,7 +66,7 @@ public class requestSubmission {
     
     private void login() throws InterruptedException { // login code
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
 		email.sendKeys(username);
 
@@ -87,7 +87,7 @@ public class requestSubmission {
 	@Test
 	public void chooseSubscriptions() throws InterruptedException {
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		
 		Thread.sleep(8000);
 		WebElement myRequestsTab = driver.findElement(By.linkText("My Requests"));
@@ -106,7 +106,7 @@ public class requestSubmission {
 	@Test(dependsOnMethods = "chooseSubscriptions")
 	public void chooseServiceToSubmitRequest() throws InterruptedException {
 		
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
 		Thread.sleep(8000);
 
@@ -134,57 +134,59 @@ public class requestSubmission {
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div/div[1]/div/button[1]"));
 		requestServiceButton.click();
 
-		Thread.sleep(6000);
+		Thread.sleep(2000);
 		WebElement servicesDropDown = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[1]/div/div"));
 		servicesDropDown.click();
 
-		Thread.sleep(6000);
-		WebElement serviceOption = driver.findElement(By.xpath("//*[@id=\"pv_id_8_0\"]"));
+		Thread.sleep(1000);
+		WebElement serviceOption = driver.findElement(By.xpath("//li[contains(@class, 'p-dropdown-item') and .//span[text()='No Internet Connection']]"));
 		serviceOption.click();
 
-		Thread.sleep(8000);
+		Thread.sleep(1000);
 		WebElement serviceCategory = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[2]/div/div"));
 		serviceCategory.click();
 
-		Thread.sleep(8000);
+		Thread.sleep(1000);
 		WebElement serviceCategoryOption = driver.findElement(By.xpath("/html/body/div[5]/div[2]/ul/li[1]"));
 		serviceCategoryOption.click();
 
-		Thread.sleep(4000);
-		WebElement description = driver.findElement(By.xpath("/html/body/div[4]/div/div[2]/form/div[3]/textarea"));
+		Thread.sleep(1000);
+		WebElement description = driver.findElement(By.xpath("//textarea[@class='w-full']"));
 		description.sendKeys("Testing description new request is added.");
-
+		
+		Thread.sleep(500);
+		WebElement preferredVisitDate = driver.findElement(By.xpath("//input[@role='combobox']"));
+		preferredVisitDate.click();
+		
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-		WebElement dateInput = driver
-				.findElement(By.xpath("//input[@role='combobox' and @class='p-inputtext p-component']"));
+		WebElement dateInput = driver.findElement(By.xpath("//input[@role='combobox' and @class='p-inputtext p-component']"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", dateInput);
+		
 
 		// Click on the next button to navigate to November if needed
 		WebElement nextButton = driver.findElement(By.className("p-datepicker-next"));
 		nextButton.click(); // Click if you need to go to the next month
 
 		// Wait for the date picker to update
-		Thread.sleep(4000); // Wait for 1 second
+		Thread.sleep(500); // Wait for 1 second
 
 		// Select the date (30)
 		WebElement dateToSelect = driver.findElement(By.xpath("//td[@aria-label='30']"));
 		dateToSelect.click();
-
+		
 		// Wait for the time picker to be visible (if necessary)
-		Thread.sleep(4000); // Wait for 1 second
+		Thread.sleep(500); // Wait for 1 second
 
 		// Set the hour (4 PM)
-		WebElement hourIncrementButton = driver
-				.findElement(By.xpath("//div[@class='p-hour-picker']//button[@aria-label='Next Hour']"));
+		WebElement hourIncrementButton = driver.findElement(By.xpath("//div[@class='p-hour-picker']//button[@aria-label='Next Hour']"));
 		for (int i = 0; i < 4; i++) { // Increment to 4 PM
-			hourIncrementButton.click();
+		    hourIncrementButton.click();
 		}
 
 		// Set the minutes (33)
-		WebElement minuteIncrementButton = driver
-				.findElement(By.xpath("//div[@class='p-minute-picker']//button[@aria-label='Next Minute']"));
+		WebElement minuteIncrementButton = driver.findElement(By.xpath("//div[@class='p-minute-picker']//button[@aria-label='Next Minute']"));
 		for (int i = 0; i < 33; i++) { // Increment to 33 minutes
-			minuteIncrementButton.click();
+		    minuteIncrementButton.click();
 		}
 
 		// Set AM/PM to PM

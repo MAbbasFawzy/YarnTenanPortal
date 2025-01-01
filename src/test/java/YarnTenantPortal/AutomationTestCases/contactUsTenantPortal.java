@@ -78,7 +78,7 @@ public class contactUsTenantPortal {
     
     private void login() throws InterruptedException { // login code
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
 		email.sendKeys(username);
 
@@ -101,7 +101,7 @@ public class contactUsTenantPortal {
 	@Test
 	public void testRedirectToContactUsPage() {
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
 		WebElement contactUsTab = driver
 				.findElement(By.linkText("Contact us"));
@@ -117,32 +117,32 @@ public class contactUsTenantPortal {
 	@Test(dependsOnMethods = "testRedirectToContactUsPage")
 	public void enterDataInContactUsForm() throws InterruptedException {
 
-		Thread.sleep(6000);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
 		WebElement contactUsMessageCategory = driver
 				.findElement(By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[1]/div/span"));
 		contactUsMessageCategory.click();
 
-		Thread.sleep(2000);
+		Thread.sleep(500);
 
-		WebElement contactUsCategory = driver.findElement(By.xpath("//*[@id=\"pv_id_2_0\"]"));
+		WebElement contactUsCategory = driver.findElement(By.xpath("//li[@aria-label='Complaint']"));
 		contactUsCategory.click();
 
-		Thread.sleep(2000);
+		//Thread.sleep(2000);
 		WebElement messageSubject = driver
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[2]/input"));
 		messageSubject.sendKeys("Solve a problem for me?");
 		
-		Thread.sleep(2000);
+		//Thread.sleep(2000);
 		WebElement messageBody = driver
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[3]/textarea"));
 		messageBody.sendKeys("Hi, I need to contact with the system admin to solve a problem for me?");
 		
 		
-		Thread.sleep(4000);
+		//Thread.sleep(4000);
 		driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[4]/div/div/input")).sendKeys("C:\\Users\\eng_m\\eclipse-workspace\\AutomationTestCases\\logo-white.png");
 				
-		Thread.sleep(2000);
+		//Thread.sleep(2000);
 		WebElement submitButton = driver
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/form/div[5]/button"));
 		submitButton.click();
@@ -160,13 +160,14 @@ public class contactUsTenantPortal {
 	
 	@Test(dependsOnMethods = "enterDataInContactUsForm")
 	public void checkContactUsHistory() throws InterruptedException {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		
-		Thread.sleep(6000);
+		//Thread.sleep(6000);
 		WebElement contactUsHistoryButton = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[1]/div[2]/button"));
 		contactUsHistoryButton.click();
 		
 		
-		Thread.sleep(2000);
+		//Thread.sleep(2000);
 		WebElement messageDescription = driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/a[1]/div/div[3]/p"));
 		assertEquals("Hi, I need to contact with the system admin to solve a problem for me?", messageDescription.getText());
 		

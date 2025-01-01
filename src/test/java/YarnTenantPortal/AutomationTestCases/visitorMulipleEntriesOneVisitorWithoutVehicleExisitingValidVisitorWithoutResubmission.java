@@ -75,7 +75,7 @@ public class visitorMulipleEntriesOneVisitorWithoutVehicleExisitingValidVisitorW
 
 	private void login() throws InterruptedException { // login code
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		WebElement email = driver.findElement(By.xpath("/html/body/div[1]/main/div/div/div[3]/form/div[1]/input"));
 		email.sendKeys(username);
 
@@ -99,13 +99,13 @@ public class visitorMulipleEntriesOneVisitorWithoutVehicleExisitingValidVisitorW
 
 		randomGenerator.Visitor visitor = randomGenerator.generateRandomContact();
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
 		Thread.sleep(10000);
 		WebElement visitorTab = driver.findElement(By.linkText("My Visitors"));
 		visitorTab.click();
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		WebElement addVisitorButton = driver.findElement(By.cssSelector(
 				"#__nuxt > main > div > div > div.hidden.sm\\:block > div:nth-child(2) > div > div > button"));
 		addVisitorButton.click();

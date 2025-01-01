@@ -4,10 +4,10 @@ import java.util.Random;
 
 public class randomGenerator {
 
-	private static final String[] FIRST_NAMES = {"Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson"};
-    private static final String[] LAST_NAMES = {"John", "Jane", "Bob", "Alice", "Mike", "Sarah", "Emily", "David"};
-    private static final String[] EMAIL_DOMAINS = {"gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "yarn.io", "yarn.dev", "yarn.com"};
-    private static final String[] NUMBERS = {"212020", "221205", "322105", "422500", "520200", "120020", "125020", "252200", "212500", "252020", "212255", "351205", "422550", "522055", "122500", "152500", "252550", "212560"};
+	private static final String[] FIRST_NAMES = {"Liam", "Emma", "Noah", "Olivia", "Ava", "Isabella", "Sophia", "Mason"};
+	private static final String[] LAST_NAMES = {"Smithson", "Johnsonson", "Williamsen", "Joneson", "Browner", "Davisley", "Milleridge", "Wilsonette"};
+	private static final String[] EMAIL_DOMAINS = {"example.com", "test.com", "demo.com", "sample.com", "mail.com", "webmail.com", "contact.com"};
+	private static final String[] NUMBERS = {"123456", "654321", "789012", "345678", "901234", "567890", "234567", "890123", "456789", "012345", "678901", "234890", "345012", "456123", "567234", "678345", "789456", "890567"};
 
     public static class Visitor {
         public String firstName;

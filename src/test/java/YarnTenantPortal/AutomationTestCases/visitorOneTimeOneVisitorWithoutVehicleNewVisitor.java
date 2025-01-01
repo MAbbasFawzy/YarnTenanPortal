@@ -39,7 +39,7 @@ import org.testng.annotations.Test;
 
 public class visitorOneTimeOneVisitorWithoutVehicleNewVisitor extends randomGenerator {
 
-	WebDriver driver = new FirefoxDriver();
+	WebDriver driver = new ChromeDriver();
 	WebDriverWait wait;
 	private String baseUrl;
 	private String username;
@@ -104,36 +104,36 @@ public class visitorOneTimeOneVisitorWithoutVehicleNewVisitor extends randomGene
 
 		randomGenerator.Visitor visitor = randomGenerator.generateRandomContact();
 
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
 
-		Thread.sleep(5000);
+		Thread.sleep(500);
 		WebElement visitorTab = driver.findElement(By.linkText("My Visitors"));
 		visitorTab.click();
 
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
 		WebElement addVisitorButton = driver.findElement(By.cssSelector(
 				"#__nuxt > main > div > div > div.hidden.sm\\:block > div:nth-child(2) > div > div > button"));
 		addVisitorButton.click();
 
-		Thread.sleep(5000);
-		WebElement visitorTypeList = driver.findElement(By.cssSelector("#pv_id_5 > span"));
+		Thread.sleep(2000);
+		WebElement visitorTypeList = driver.findElement(By.xpath("/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[1]/div[1]/span[1]"));
 		visitorTypeList.click();
 
-		Thread.sleep(4000);
-		WebElement visitorTypeListOption = driver.findElement(By.id("pv_id_5_2"));
+		Thread.sleep(500);
+		WebElement visitorTypeListOption = driver.findElement(By.xpath("//li[contains(@class, 'p-dropdown-item') and .//span[text()='Friend']]"));
 		visitorTypeListOption.click();
 
-		Thread.sleep(2000);
+		Thread.sleep(500);
 		WebElement entryType = driver.findElement(By.id("single"));
 		entryType.click();
 
-		Thread.sleep(2000);
+		Thread.sleep(500);
 		// Locate and click the calendar input field
 		WebElement calendarInput = driver
 				.findElement(By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[2]/div[2]/span/input"));
 		calendarInput.click();
 
-		Thread.sleep(2000);
+		Thread.sleep(500);
 		// Select the date (e.g., November 9, 2024)
 		// Navigate to the correct month if necessary
 		WebElement nextMonthButton = driver.findElement(By.xpath("//button[@aria-label='Next Month']"));
@@ -155,116 +155,103 @@ public class visitorOneTimeOneVisitorWithoutVehicleNewVisitor extends randomGene
 		// Select AM/PM
 		WebElement amPmButton = driver.findElement(By.xpath("//button[@aria-label='pm']")); // Change to 'am' if needed
 		amPmButton.click(); // Click to select PM
+		
+		
 
-		Thread.sleep(2000);
+		Thread.sleep(500);
 		WebElement visitorFirstName = driver.findElement(
 				By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[1]/input"));
 		visitorFirstName.sendKeys(visitor.firstName);
 
-		Thread.sleep(2000);
+		Thread.sleep(500);
 		WebElement visitorLastName = driver.findElement(
 				By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[2]/input"));
 		visitorLastName.sendKeys(visitor.lastName);
+		
+		Thread.sleep(500);
+		WebElement documentType = driver.findElement(By.xpath(
+				"//span[@class='p-dropdown-label p-inputtext p-dropdown-label-empty' and @role='combobox' and @aria-haspopup='listbox']"));
+		documentType.click();
 
-		Thread.sleep(2000);
-		WebElement email = driver.findElement(By.xpath(
-				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[3]/div[1]/input"));
-		email.sendKeys(visitor.email);
+		Thread.sleep(500);
+		WebElement documentTypeListOption = driver.findElement(By.xpath("/html/body/div[4]/div[2]/ul/li[1]"));
+		documentTypeListOption.click();
 
-		Thread.sleep(4000);
+		Thread.sleep(500);
+		WebElement documentNumber = driver.findElement(
+				By.xpath("//div[@class='grid sm:grid-cols-2 gap-4 mb-8']//div[4]//input[1]"));
+		documentNumber.sendKeys(visitor.numbers);
+		
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		Thread.sleep(500);
 		WebElement nationality = driver.findElement(By.xpath(
-				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[4]/div[1]/span"));
+				"/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]/div[2]/form[1]/div[3]/div[1]/div[2]/div[1]/div[1]/div[1]/div[5]/div[1]"));
+		
+		js.executeScript("arguments[0].scrollIntoView(true);", documentNumber);
 		nationality.click();
 		
 		WebElement searchBox = driver.findElement(By.xpath("//input[@role='searchbox']"));
-		searchBox.sendKeys("Egypt");
+		searchBox.sendKeys("Afghanistan");
 
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 			WebElement alertDialog = wait
 					.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".p-dialog")));
 
 			WebElement cancelButton = alertDialog.findElement(By.cssSelector("button[type='button']"));
 			cancelButton.click();
 		} catch (Exception e) {
-			Thread.sleep(6000);
-			WebElement nationalityOption = driver.findElement(By.xpath("/html[1]/body[1]/div[4]/div[2]/ul[1]/li[1]"));
-			//WebElement nationalityOption = driver.findElement(By.xpath("//li[@class='p-dropdown-item p-focus' and @aria-label='Egypt']"));
-			nationalityOption.click();
 			
-			/*
-			 * Thread.sleep(6000); nationalityOption.click();
-			 */
+			Thread.sleep(2000);
+			WebElement nationalityOption = driver.findElement(By.xpath("//li[@aria-label='Afghanistan']"));
+			
+			Thread.sleep(2000);
+			nationalityOption.click();
 		}
-
-		Thread.sleep(4000);
-		WebElement documentType = driver.findElement(By.xpath(
-				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[5]/div[1]/span"));
-		documentType.click();
-
-		Thread.sleep(2000);
-		WebElement documentTypeListOption = driver.findElement(By.xpath("/html/body/div[4]/div[2]/ul/li[1]"));
-		documentTypeListOption.click();
-
-		Thread.sleep(2000);
-		WebElement documentNumber = driver.findElement(
-				By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[6]/input"));
-		documentNumber.sendKeys(visitor.numbers);
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-		/*
-		 * WebElement inputElement =
-		 * wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
-		 * ".p-inputtext"))); JavascriptExecutor js = (JavascriptExecutor) driver;
-		 * js.executeScript("arguments[0].scrollIntoView(true);", inputElement);
-		 * 
-		 * // Click the input field to open the date picker inputElement.click();
-		 * 
-		 * // Wait for the date picker to become visible WebElement todayElement =
-		 * wait.until(ExpectedConditions.elementToBeClickable(By.
-		 * cssSelector(".p-datepicker-today .p-highlight")));
-		 * 
-		 * // Click on the "Today" element todayElement.click();
-		 */
-
-		// Format today's date
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-		String formattedDate = today.format(formatter);
-
-		// Locate the date of birth input and click it
-		WebElement dateOfBirth = driver.findElement(By.xpath(
-				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[7]/span/input"));
-		dateOfBirth.click();
-
-		// Wait for the date picker to be visible
-		WebDriverWait waitBirthDate = new WebDriverWait(driver, Duration.ofSeconds(2));
-		waitBirthDate
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='p-datepicker-group']"))); // Adjust the ID as needed
-
-		// Wait for the specific day to be clickable
+		
 		Thread.sleep(500);
-		WebElement birthDateToSelect = wait
-				.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[@class='p-datepicker-today']")));
-		Thread.sleep(2000);
-		birthDateToSelect.click();
-
-		Thread.sleep(2000);
 		WebElement gender = driver.findElement(By.xpath(
-				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[8]/div[1]/span"));
+				"/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]/div[2]/form[1]/div[3]/div[1]/div[2]/div[1]/div[1]/div[1]/div[6]/div[1]/span[1]"));
 		gender.click();
 
-		Thread.sleep(2000);
-		WebElement genderOption = driver.findElement(By.xpath("/html/body/div[4]/div/ul/li[1]"));
+		Thread.sleep(500);
+		WebElement genderOption = driver.findElement(By.xpath("//li[@aria-label='Male']"));
 		genderOption.click();
+		
+		/*
+		 * Thread.sleep(500); WebElement phoneNumber = driver.findElement( By.xpath(
+		 * "/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[9]/input"
+		 * )); phoneNumber.sendKeys("01005710499");
+		 * 
+		 * WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+		 * 
+		 * // Format today's date LocalDate today = LocalDate.now(); DateTimeFormatter
+		 * formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy"); String formattedDate =
+		 * today.format(formatter);
+		 * 
+		 * // Locate the date of birth input and click it WebElement dateOfBirth =
+		 * driver.findElement(By.xpath(
+		 * "/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[7]/span/input"
+		 * )); dateOfBirth.click();
+		 * 
+		 * // Wait for the date picker to be visible WebDriverWait waitBirthDate = new
+		 * WebDriverWait(driver, Duration.ofSeconds(2)); waitBirthDate
+		 * .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
+		 * "//div[@class='p-datepicker-group']"))); // Adjust the ID as needed
+		 * 
+		 * // Wait for the specific day to be clickable Thread.sleep(500); WebElement
+		 * birthDateToSelect = wait
+		 * .until(ExpectedConditions.elementToBeClickable(By.xpath(
+		 * "//td[@class='p-datepicker-today']"))); Thread.sleep(500);
+		 * birthDateToSelect.click();
+		 * 
+		 * Thread.sleep(500); WebElement email = driver.findElement(By.xpath(
+		 * "/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[3]/div[1]/input"
+		 * )); email.sendKeys(visitor.email);
+		 */
+		
 
-		Thread.sleep(2000);
-		WebElement phoneNumber = driver.findElement(
-				By.xpath("/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[1]/div[9]/input"));
-		phoneNumber.sendKeys("01005710499");
-
-		Thread.sleep(2000);
+		Thread.sleep(500);
 		WebElement transportation = driver.findElement(By.xpath(
 				"/html/body/div[1]/main/div/div/div[2]/form/div[3]/div/div[2]/div/div/div[2]/div/div/span[1]/input"));
 		transportation.click();
@@ -285,7 +272,7 @@ public class visitorOneTimeOneVisitorWithoutVehicleNewVisitor extends randomGene
 	@Test(priority = 1)
 	public void checkAlertForMaxNumberOfVisitors() {
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
 		WebElement successMessage = wait
 				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".p-toast > div:nth-child(1)")));
 
@@ -298,7 +285,7 @@ public class visitorOneTimeOneVisitorWithoutVehicleNewVisitor extends randomGene
 	@Test(priority = 2)
 	public void checkDefaultVisitorStatus() {
 
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
 
 		WebElement visitorStatus = driver
 				.findElement(By.xpath("//*[@id=\"__nuxt\"]/main/div/div/div[2]/div[1]/span[2]"));
